@@ -2,7 +2,6 @@ package ca.qc.bdeb.sim.tp2_camelotavelo;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -26,6 +25,9 @@ public class CamelotAVelo extends Application {
 
         Scene scene = new Scene(root, WIDTH, HEIGHT);
 
+        //Scene Event Listeners
+        scene.setOnKeyPressed((k) -> Input.addKey(k.getCode()));
+        scene.setOnKeyReleased((k) -> Input.removeKey(k.getCode()));
 
         //Configuration du stage
         stage.setTitle("CamelotAVelo");
@@ -40,8 +42,12 @@ public class CamelotAVelo extends Application {
      * Initialise tous les objets de jeux nécessaire au début du jeu
      */
     private void gameObjectInit(){
+        AssetsLoader.loadAssets();
+
         getGraphicContext().setFill(Color.BROWN);
         getGraphicContext().fillRect(0, 0, WIDTH, HEIGHT);
+
+        Player camelot = new Player(100,HEIGHT - 70, 70, 70);
     }
 
     /**
