@@ -12,6 +12,7 @@ public abstract class GameObject {
 
     protected abstract void update();
     protected abstract void draw();
+    protected void delete(){GAME_OBJECT_ARRAY_LIST.remove(this);}
 
     public GameObject(double posX, double posY, double width, double height){
         GAME_OBJECT_ARRAY_LIST.add(this);
@@ -27,4 +28,6 @@ public abstract class GameObject {
     public static void drawAll(){
         GAME_OBJECT_ARRAY_LIST.forEach(GameObject::draw);
     }
+
+
 }
