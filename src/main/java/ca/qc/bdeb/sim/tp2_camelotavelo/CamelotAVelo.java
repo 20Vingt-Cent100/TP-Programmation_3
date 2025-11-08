@@ -44,9 +44,6 @@ public class CamelotAVelo extends Application {
     private void gameObjectInit(){
         AssetsLoader.loadAssets();
 
-        getGraphicContext().setFill(Color.BROWN);
-        getGraphicContext().fillRect(0, 0, WIDTH, HEIGHT);
-
         Player camelot = new Player(100,HEIGHT - 70, 70, 70);
     }
 
@@ -60,6 +57,9 @@ public class CamelotAVelo extends Application {
         var loop = new AnimationTimer(){
             @Override
             public void handle(long now) {
+                getGraphicContext().setFill(Color.BROWN);
+                getGraphicContext().fillRect(0, 0, WIDTH, HEIGHT);
+
                 //Calcule le différence de temps entre maintenant et la dernière frame
                 Time.deltaTime(now);
 

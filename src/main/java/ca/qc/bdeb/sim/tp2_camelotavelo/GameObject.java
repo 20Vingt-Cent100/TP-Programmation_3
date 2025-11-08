@@ -7,8 +7,8 @@ import java.util.ArrayList;
 public abstract class GameObject {
     private final static ArrayList<GameObject> GAME_OBJECT_ARRAY_LIST = new ArrayList<>();
 
-    protected final Point2D POSITION;
-    protected final Point2D SIZE;
+    protected Point2D POSITION;
+    protected Point2D SIZE;
 
     protected abstract void update();
     protected abstract void draw();
