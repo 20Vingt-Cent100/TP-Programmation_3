@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class CamelotAVelo extends Application {
-    private final static int WIDTH = 1080, HEIGHT = 640;
+    private final static int WIDTH = 900, HEIGHT = 580;
 
     //Canvas utilisé pour l'ensemble du jeu
     private final static Canvas C_WINDOW = new Canvas(WIDTH, HEIGHT);
@@ -35,26 +35,25 @@ public class CamelotAVelo extends Application {
         stage.show();
 
         gameObjectInit();
-        gameLoop();
+        gameLoop(stage);
     }
 
     /**
      * Initialise tous les objets de jeux nécessaire au début du jeu
      */
     private void gameObjectInit(){
-        AssetsLoader.loadAssets();
-
-        Player camelot = new Player(100,HEIGHT - 70, 70, 70);
+        Player camelot = new Player(100,HEIGHT - 144, 172, 144);
     }
 
     /**
      * Boucle de jeu
      */
-    private void gameLoop(){
+    private void gameLoop(Stage st){
         //Initialise la variable pastTime
         Time.loadPastTime();
 
         var loop = new AnimationTimer(){
+            double t = 0;
             @Override
             public void handle(long now) {
                 getGraphicContext().setFill(Color.BROWN);
@@ -65,6 +64,12 @@ public class CamelotAVelo extends Application {
 
                 GameObject.updateAll();
                 GameObject.drawAll();
+                t += Time.deltaTimeSec;
+
+                if(t > 1) {
+                    t -= 1;
+                    st.setTitle(String.format("FPS: %d", (int) (1 / Time.deltaTimeSec)));
+                }
             }
         };
         loop.start();

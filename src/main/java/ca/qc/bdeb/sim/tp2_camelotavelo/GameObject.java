@@ -7,8 +7,8 @@ import java.util.ArrayList;
 public abstract class GameObject {
     private final static ArrayList<GameObject> GAME_OBJECT_ARRAY_LIST = new ArrayList<>();
 
-    protected Point2D POSITION;
-    protected Point2D SIZE;
+    protected Point2D position;
+    protected Point2D size;
 
     protected abstract void update();
     protected abstract void draw();
@@ -17,12 +17,19 @@ public abstract class GameObject {
     public GameObject(double posX, double posY, double width, double height){
         GAME_OBJECT_ARRAY_LIST.add(this);
 
-        POSITION = new Point2D(posX, posY);
-        SIZE = new Point2D(width, height);
+        position = new Point2D(posX, posY);
+        size = new Point2D(width, height);
     }
 
     public static void updateAll(){
-        GAME_OBJECT_ARRAY_LIST.forEach(GameObject::update);
+        GAME_OBJECT_ARRAY_LIST.forEach(
+                (g) -> {
+                    if(g instanceof Gravity)
+                        ((Gravity) g).applyGravity();
+
+                    g.update();
+                }
+        );
     }
 
     public static void drawAll(){
