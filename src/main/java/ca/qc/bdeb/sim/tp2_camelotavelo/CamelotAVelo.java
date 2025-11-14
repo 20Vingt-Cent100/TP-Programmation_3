@@ -17,7 +17,7 @@ import java.util.List;
 
 public class CamelotAVelo extends Application {
 
-    private double cameraX = 0;   // scroll horizontal
+    private double cameraX = 0;
     private final double solY = 500;
 
     private final List<Maison> maisons = new ArrayList<>();
@@ -31,10 +31,10 @@ public class CamelotAVelo extends Application {
         Canvas canvas = new Canvas(largeurFenetre, hauteurFenetre);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        // --- Charger l'image de background ---
+
         background = new Image(getClass().getResourceAsStream("/assets/brique.png"));
 
-        // --- Créer un petit monde de test ---
+
         creerMaisonsDeTest();
 
         Pane root = new Pane(canvas);
@@ -43,7 +43,7 @@ public class CamelotAVelo extends Application {
         root.setFocusTraversable(true);
         root.requestFocus();
 
-        // --- Caméra gauche/droite ---
+
         scene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case RIGHT -> cameraX += 30;
@@ -51,7 +51,7 @@ public class CamelotAVelo extends Application {
             }
         });
 
-        // --- Boucle d’affichage ---
+
         new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -65,19 +65,19 @@ public class CamelotAVelo extends Application {
     }
 
     private void dessiner(GraphicsContext gc, double largeur, double hauteur) {
-        // === Background pattern rempli ===
+
         for (double x = 0; x < largeur; x += background.getWidth()) {
             for (double y = 0; y < hauteur; y += background.getHeight()) {
                 gc.drawImage(background, x, y);
             }
         }
 
-        // === Dessiner les maisons ===
+
         for (Maison m : maisons) {
             m.draw(gc, cameraX, solY);
         }
 
-        // Debug (optionnel)
+
         gc.setStroke(javafx.scene.paint.Color.YELLOW);
         for (Maison m : maisons) {
             m.drawDebuggage(gc, cameraX);
