@@ -4,7 +4,7 @@ import javafx.geometry.Point2D;
 
 import java.util.ArrayList;
 
-public abstract class GameObject {
+public abstract class  GameObject {
     private final static ArrayList<GameObject> GAME_OBJECT_ARRAY_LIST = new ArrayList<>();
 
     protected Point2D POSITION;
