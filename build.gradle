@@ -26,7 +26,7 @@ tasks.withType(JavaCompile) {
 
 application {
   mainModule = 'ca.qc.bdeb.sim.tp2_camelotavelo'
-  mainClass = 'ca.qc.bdeb.sim.tp2_camelotavelo.CamelotAVelo'
+  mainClass = 'ca.qc.bdeb.sim.tp2_camelotavelo.App'
 }
 
 javafx {
