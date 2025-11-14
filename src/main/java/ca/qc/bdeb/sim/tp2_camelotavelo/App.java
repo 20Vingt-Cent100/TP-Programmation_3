@@ -63,8 +63,8 @@ public class App extends Application {
 
                 Time.deltaTime(now);
 
-                ca.qc.bdeb.sim.tp2_secondVersion.GameObject.updateAll();
-                ca.qc.bdeb.sim.tp2_secondVersion.GameObject.drawAll(graphicContext, camera);
+                GameObject.updateAll();
+                GameObject.drawAll(graphicContext, camera);
             }
         };
         loop.start();

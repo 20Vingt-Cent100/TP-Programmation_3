@@ -9,7 +9,7 @@ import java.util.Random;
 public class Journal extends GameObject implements Gravity{
     private static float mass;
 
-    private Image sprite = new Image("ca/qc/bdeb/sim/tp2_secondVersion/assets/journal.png");
+    private Image sprite = new Image("assets/journal.png");
 
     private Point2D acceleration;
     private Point2D speed;

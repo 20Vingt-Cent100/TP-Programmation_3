@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
 public class Wall extends GameObject{
-    private final Image[] img = {new Image("ca/qc/bdeb/sim/tp2_secondVersion/assets/brique.png"), new Image("ca/qc/bdeb/sim/tp2_secondVersion/assets/pixelBrique.png")};
+    private final Image[] img = {new Image("assets/brique.png"), new Image("assets/pixelBrique.png")};
 
     public Wall(double posX, double posY, double width, double height) {
         super(posX, posY, width, height);
