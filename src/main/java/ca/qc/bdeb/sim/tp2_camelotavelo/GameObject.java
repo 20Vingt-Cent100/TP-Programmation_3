@@ -1,29 +1,41 @@
-package ca.qc.bdeb.sim.tp2_camelotavelo;
+package ca.qc.bdeb.sim.tp2_secondVersion;
 
 import javafx.geometry.Point2D;
+import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
 
 public abstract class GameObject {
     private final static ArrayList<GameObject> GAME_OBJECT_ARRAY_LIST = new ArrayList<>();
+    private final static ArrayList<GameObject> TEMP_ADD_LIST = new ArrayList<>();
+    private final static ArrayList<GameObject> TEMP_REMOVE_LIST = new ArrayList<>();
+
+    protected static int imgIndex = 0;
 
     protected Point2D position;
     protected Point2D size;
 
     protected abstract void update();
-    protected abstract void draw();
-    protected void delete(){GAME_OBJECT_ARRAY_LIST.remove(this);}
+    protected abstract void draw(GraphicsContext graphicsContext, Camera camera);
+    protected void delete(){TEMP_REMOVE_LIST.add(this);}
 
     public GameObject(double posX, double posY, double width, double height){
-        GAME_OBJECT_ARRAY_LIST.add(this);
+        TEMP_ADD_LIST.add(this);
 
         position = new Point2D(posX, posY);
         size = new Point2D(width, height);
     }
 
     public static void updateAll(){
+        GAME_OBJECT_ARRAY_LIST.addAll(TEMP_ADD_LIST);
+        TEMP_ADD_LIST.clear();
+
+        GAME_OBJECT_ARRAY_LIST.removeAll(TEMP_REMOVE_LIST);
+        TEMP_REMOVE_LIST.clear();
+
         GAME_OBJECT_ARRAY_LIST.forEach(
                 (g) -> {
+
                     if(g instanceof Gravity)
                         ((Gravity) g).applyGravity();
 
@@ -32,9 +44,8 @@ public abstract class GameObject {
         );
     }
 
-    public static void drawAll(){
-        GAME_OBJECT_ARRAY_LIST.forEach(GameObject::draw);
+    public static void drawAll(GraphicsContext graphicsContext, Camera camera){
+        camera.updateFov();
+        GAME_OBJECT_ARRAY_LIST.forEach(object -> object.draw(graphicsContext, camera));
     }
-
-
 }
