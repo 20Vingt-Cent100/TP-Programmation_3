@@ -18,13 +18,13 @@ public class Fenetre {
     private final Image briseeVerte;
     private final Image briseeRouge;
 
-    public Fenetre(double x, double y, boolean abonnee, Image intacte, Image briseeVerte, Image briseeRouge) {
+    public Fenetre(double x, double y, boolean abonnee) {
         this.x = x;
         this.y = y;
         this.abonnee = abonnee;
-        this.intacte = intacte;
-        this.briseeVerte = briseeVerte;
-        this.briseeRouge = briseeRouge;
+        this.intacte = new Image(getClass().getResourceAsStream("/assets/fenetre.png"));;
+        this.briseeVerte = new Image(getClass().getResourceAsStream("/assets/fenetre-brisee-vert.png"));
+        this.briseeRouge = new Image(getClass().getResourceAsStream("/assets/fenetre-brisee-rouge.png"));;
         this.brisee = false;
         this.bonneCasse = null;
     }

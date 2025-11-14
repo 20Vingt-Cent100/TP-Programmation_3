@@ -18,13 +18,13 @@ public class BoiteAuxLettres {
     private final Image vert;
     private final Image rouge;
 
-    public BoiteAuxLettres(double x, double y, boolean abonnee, Image normale, Image vert, Image rouge) {
+    public BoiteAuxLettres(double x, double y, boolean abonnee) {
         this.x = x;
         this.y = y;
         this.abonnee = abonnee;
-        this.normale = normale;
-        this.vert = vert;
-        this.rouge = rouge;
+        this.normale = new Image(getClass().getResourceAsStream("/assets/boite-aux-lettres.png"));;
+        this.vert = new Image(getClass().getResourceAsStream("/assets/boite-aux-lettres-vert.png"));;
+        this.rouge = new Image(getClass().getResourceAsStream("/assets/boite-aux-lettres-rouge.png"));;
         this.touchee = false;
         this.livraisonBonne = null;
     }

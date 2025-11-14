@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
 public class Player extends GameObject{
-    private final Image[] sprites = {AssetsLoader.getImage("camelot1.png"), AssetsLoader.getImage("camelot2.png")};
+    private final Image[] sprites = new Image []{new Image(getClass().getResourceAsStream("/assets/camelot1.png")) , new Image(getClass().getResourceAsStream("/assets/camelot2.png")) };
     private boolean isGrounded = true;
 
     public Player(double posX, double posY, double width, double height) {
@@ -29,6 +29,6 @@ public class Player extends GameObject{
 
     @Override
     protected void draw() {
-        CamelotAVelo.getGraphicContext().drawImage(sprites[0], POSITION.getX(), POSITION.getY(), SIZE.getX(), SIZE.getY());
+
     }
 }

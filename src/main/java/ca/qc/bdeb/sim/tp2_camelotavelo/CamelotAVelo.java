@@ -5,81 +5,113 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CamelotAVelo extends Application {
-    private final static int WIDTH = 1080, HEIGHT = 640;
 
-    //Canvas utilisé pour l'ensemble du jeu
-    private final static Canvas C_WINDOW = new Canvas(WIDTH, HEIGHT);
+    private double cameraX = 0;   // scroll horizontal
+    private final double solY = 500;
 
+    private final List<Maison> maisons = new ArrayList<>();
+    private Image background;
 
     @Override
-    public void start(Stage stage) throws IOException {
-        var root = new VBox();
-        root.getChildren().add(C_WINDOW);
+    public void start(Stage stage) {
+        double largeurFenetre = 1200;
+        double hauteurFenetre = 600;
 
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
+        Canvas canvas = new Canvas(largeurFenetre, hauteurFenetre);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        //Scene Event Listeners
-        scene.setOnKeyPressed((k) -> Input.addKey(k.getCode()));
-        scene.setOnKeyReleased((k) -> Input.removeKey(k.getCode()));
+        // --- Charger l'image de background ---
+        background = new Image(getClass().getResourceAsStream("/assets/brique.png"));
 
-        //Configuration du stage
-        stage.setTitle("CamelotAVelo");
-        stage.setScene(scene);
-        stage.show();
+        // --- Créer un petit monde de test ---
+        creerMaisonsDeTest();
 
-        gameObjectInit();
-        gameLoop();
-    }
+        Pane root = new Pane(canvas);
+        Scene scene = new Scene(root, largeurFenetre, hauteurFenetre);
 
-    /**
-     * Initialise tous les objets de jeux nécessaire au début du jeu
-     */
-    private void gameObjectInit(){
-        AssetsLoader.loadAssets();
+        root.setFocusTraversable(true);
+        root.requestFocus();
 
-        Player camelot = new Player(100,HEIGHT - 70, 70, 70);
-    }
+        // --- Caméra gauche/droite ---
+        scene.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case RIGHT -> cameraX += 30;
+                case LEFT  -> cameraX -= 30;
+            }
+        });
 
-    /**
-     * Boucle de jeu
-     */
-    private void gameLoop(){
-        //Initialise la variable pastTime
-        Time.loadPastTime();
-
-        var loop = new AnimationTimer(){
+        // --- Boucle d’affichage ---
+        new AnimationTimer() {
             @Override
             public void handle(long now) {
-                getGraphicContext().setFill(Color.BROWN);
-                getGraphicContext().fillRect(0, 0, WIDTH, HEIGHT);
-
-                //Calcule le différence de temps entre maintenant et la dernière frame
-                Time.deltaTime(now);
-
-                GameObject.updateAll();
-                GameObject.drawAll();
+                dessiner(gc, largeurFenetre, hauteurFenetre);
             }
-        };
-        loop.start();
+        }.start();
+
+        stage.setScene(scene);
+        stage.setTitle("Test Maison + Caméra + Background image");
+        stage.show();
+    }
+
+    private void dessiner(GraphicsContext gc, double largeur, double hauteur) {
+        // === Background pattern rempli ===
+        for (double x = 0; x < largeur; x += background.getWidth()) {
+            for (double y = 0; y < hauteur; y += background.getHeight()) {
+                gc.drawImage(background, x, y);
+            }
+        }
+
+        // === Dessiner les maisons ===
+        for (Maison m : maisons) {
+            m.draw(gc, cameraX, solY);
+        }
+
+        // Debug (optionnel)
+        gc.setStroke(javafx.scene.paint.Color.YELLOW);
+        for (Maison m : maisons) {
+            m.drawDebuggage(gc, cameraX);
+        }
+    }
+
+    private void creerMaisonsDeTest() {
+        double[] bases = {200, 900, 1700};
+
+        for (int i = 0; i < bases.length; i++) {
+            double baseMaison = bases[i];
+            boolean abonnee = (i % 2 == 0);
+
+            BoiteAuxLettres boite = new BoiteAuxLettres(
+                    baseMaison + 180,
+                    solY - BoiteAuxLettres.hauteur,
+                    abonnee
+            );
+
+            List<Fenetre> fenetres = new ArrayList<>();
+            fenetres.add(new Fenetre(baseMaison + 300, 50, abonnee));
+            fenetres.add(new Fenetre(baseMaison + 600, 50, abonnee));
+
+            maisons.add(new Maison(
+                    baseMaison,
+                    100 + i,
+                    abonnee,
+                    boite,
+                    fenetres
+            ));
+        }
     }
 
     public static void main(String[] args) {
         launch();
-    }
-
-    /**
-     * Permet d'obtenir le contexte graphique de n'importe où dans l'application
-     * pour pouvoir y dessiner les objets
-     * @return Le contexte graphique du canvass C_WINDOW
-     */
-    public static GraphicsContext getGraphicContext(){
-        return C_WINDOW.getGraphicsContext2D();
     }
 }
