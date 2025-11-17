@@ -4,12 +4,10 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Fenetre {
+public class Fenetre extends GameObject {
     public static final double largeur = 159;
     public static final double hauteur = 130;
 
-    private final double x;
-    private final double y;
     private final boolean abonnee;
     private boolean brisee;
     private Boolean bonneCasse;
@@ -18,9 +16,8 @@ public class Fenetre {
     private final Image briseeVerte;
     private final Image briseeRouge;
 
-    public Fenetre(double x, double y, boolean abonnee) {
-        this.x = x;
-        this.y = y;
+    public Fenetre( double posX , double posY, boolean abonnee) {
+   super(posX,posY, largeur, hauteur);
         this.abonnee = abonnee;
         this.intacte = new Image(getClass().getResourceAsStream("/assets/fenetre.png"));;
         this.briseeVerte = new Image(getClass().getResourceAsStream("/assets/fenetre-brisee-vert.png"));
@@ -30,7 +27,7 @@ public class Fenetre {
     }
 
     public Rectangle2D getLimite() {
-        return new Rectangle2D(x, y, largeur, hauteur);
+        return new Rectangle2D(position.getX(), position.getY() , largeur, hauteur);
     }
 
     public void casser(boolean bonne) {
@@ -46,9 +43,18 @@ public class Fenetre {
         return abonnee;
     }
 
-    public void draw(GraphicsContext gc, double cameraX) {
-        double positionAfficher = x - cameraX;
+    @Override
+    protected void update(){
+
+    }
+
+    @Override
+    public void draw(GraphicsContext gc, Camera camera) {
+        double posX = position.getX() - camera.getX();
+        double posY = position.getY() - camera.getY();
+
         Image imageFenetre = intacte;
+
         if (brisee && bonneCasse != null) {
             if (bonneCasse) {
                 if (briseeVerte != null) {
@@ -64,11 +70,12 @@ public class Fenetre {
                 }
             }
         }
-        gc.drawImage(imageFenetre, positionAfficher, y, largeur, hauteur);
+        gc.drawImage(imageFenetre, posX, posY, largeur, hauteur);
     }
 
-    public void drawDebuggage(GraphicsContext gc, double cameraX) {
-        double positionAfficher = x - cameraX;
-        gc.strokeRect(positionAfficher, y, largeur, hauteur);
+    public void drawDebuggage(GraphicsContext gc, Camera camera) {
+        double posX = position.getX() - camera.getX();
+        double posY = position.getY() - camera.getY();
+        gc.strokeRect(posX, posY, largeur, hauteur);
     }
 }
