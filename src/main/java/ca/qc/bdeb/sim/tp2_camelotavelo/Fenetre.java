@@ -12,16 +12,18 @@ public class Fenetre extends GameObject {
     private boolean brisee;
     private Boolean bonneCasse;
 
-    private final Image intacte;
-    private final Image briseeVerte;
-    private final Image briseeRouge;
+    private final Image [][] SPRITES = {
+            {new Image(getClass().getResourceAsStream("/assets/fenetre.png")),
+                    new Image(getClass().getResourceAsStream("/assets/fenetre-brisee-vert.png")),
+                    new Image(getClass().getResourceAsStream("/assets/fenetre-brisee-rouge.png"))
+            },
+            {}
+    };
+
 
     public Fenetre( double posX , double posY, boolean abonnee) {
    super(posX,posY, largeur, hauteur);
         this.abonnee = abonnee;
-        this.intacte = new Image(getClass().getResourceAsStream("/assets/fenetre.png"));;
-        this.briseeVerte = new Image(getClass().getResourceAsStream("/assets/fenetre-brisee-vert.png"));
-        this.briseeRouge = new Image(getClass().getResourceAsStream("/assets/fenetre-brisee-rouge.png"));;
         this.brisee = false;
         this.bonneCasse = null;
     }
@@ -53,29 +55,29 @@ public class Fenetre extends GameObject {
         double posX = position.getX() - camera.getX();
         double posY = position.getY() - camera.getY();
 
-        Image imageFenetre = intacte;
+        Image imageFenetre = SPRITES[0][0];
 
         if (brisee && bonneCasse != null) {
             if (bonneCasse) {
-                if (briseeVerte != null) {
-                    imageFenetre = briseeVerte;
+                if (SPRITES[0][1] != null) {
+                    imageFenetre = SPRITES[0][1];
                 } else {
-                    imageFenetre = intacte;
+                    imageFenetre = SPRITES[0][0];
                 }
             } else {
-                if (briseeRouge != null) {
-                    imageFenetre = briseeRouge;
+                if (SPRITES[0][2] != null) {
+                    imageFenetre = SPRITES[0][2];
                 } else {
-                    imageFenetre = intacte;
+                    imageFenetre = SPRITES[0][0];
                 }
             }
         }
-        gc.drawImage(imageFenetre, posX, posY, largeur, hauteur);
+        gc.drawImage(imageFenetre, posX, posY, size.getX(),size.getY());
     }
 
     public void drawDebuggage(GraphicsContext gc, Camera camera) {
         double posX = position.getX() - camera.getX();
         double posY = position.getY() - camera.getY();
-        gc.strokeRect(posX, posY, largeur, hauteur);
+        gc.strokeRect(posX, posY, size.getX(), size.getY());
     }
 }
