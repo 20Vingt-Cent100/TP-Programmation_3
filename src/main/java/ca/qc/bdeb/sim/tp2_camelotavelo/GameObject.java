@@ -4,6 +4,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public abstract class GameObject {
     private final static ArrayList<GameObject> GAME_OBJECT_ARRAY_LIST = new ArrayList<>();
@@ -47,5 +48,9 @@ public abstract class GameObject {
     public static void drawAll(GraphicsContext graphicsContext, Camera camera){
         camera.updateFov();
         GAME_OBJECT_ARRAY_LIST.forEach(object -> object.draw(graphicsContext, camera));
+    }
+
+    protected String getImagePath(String imagePath){
+        return Objects.requireNonNull(this.getClass().getResourceAsStream("assets/" + imagePath)).toString();
     }
 }

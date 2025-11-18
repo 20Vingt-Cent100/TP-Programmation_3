@@ -7,9 +7,10 @@ import javafx.scene.image.Image;
 import java.util.Random;
 
 public class Journal extends GameObject implements Gravity{
+    public static int journalCount = 10;
     private static float mass;
 
-    private Image sprite = new Image("assets/journal.png");
+    private Image sprite = new Image(getClass().getResourceAsStream("/assets/journal.png"));
 
     private Point2D acceleration;
     private Point2D speed;
