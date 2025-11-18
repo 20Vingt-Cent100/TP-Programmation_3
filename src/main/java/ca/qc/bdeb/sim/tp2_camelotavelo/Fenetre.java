@@ -4,33 +4,32 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Fenetre {
+public class Fenetre extends GameObject {
     public static final double largeur = 159;
     public static final double hauteur = 130;
 
-    private final double x;
-    private final double y;
     private final boolean abonnee;
     private boolean brisee;
     private Boolean bonneCasse;
 
-    private final Image intacte;
-    private final Image briseeVerte;
-    private final Image briseeRouge;
+    private final Image [][] SPRITES = {
+            {new Image(getClass().getResourceAsStream("/assets/fenetre.png")),
+                    new Image(getClass().getResourceAsStream("/assets/fenetre-brisee-vert.png")),
+                    new Image(getClass().getResourceAsStream("/assets/fenetre-brisee-rouge.png"))
+            },
+            {}
+    };
 
-    public Fenetre(double x, double y, boolean abonnee) {
-        this.x = x;
-        this.y = y;
+
+    public Fenetre( double posX , double posY, boolean abonnee) {
+   super(posX,posY, largeur, hauteur);
         this.abonnee = abonnee;
-        this.intacte = new Image(getClass().getResourceAsStream("/assets/fenetre.png"));;
-        this.briseeVerte = new Image(getClass().getResourceAsStream("/assets/fenetre-brisee-vert.png"));
-        this.briseeRouge = new Image(getClass().getResourceAsStream("/assets/fenetre-brisee-rouge.png"));;
         this.brisee = false;
         this.bonneCasse = null;
     }
 
     public Rectangle2D getLimite() {
-        return new Rectangle2D(x, y, largeur, hauteur);
+        return new Rectangle2D(position.getX(), position.getY() , largeur, hauteur);
     }
 
     public void casser(boolean bonne) {
@@ -46,29 +45,39 @@ public class Fenetre {
         return abonnee;
     }
 
-    public void draw(GraphicsContext gc, double cameraX) {
-        double positionAfficher = x - cameraX;
-        Image imageFenetre = intacte;
+    @Override
+    protected void update(){
+
+    }
+
+    @Override
+    public void draw(GraphicsContext gc, Camera camera) {
+        double posX = position.getX() - camera.getX();
+        double posY = position.getY() - camera.getY();
+
+        Image imageFenetre = SPRITES[0][0];
+
         if (brisee && bonneCasse != null) {
             if (bonneCasse) {
-                if (briseeVerte != null) {
-                    imageFenetre = briseeVerte;
+                if (SPRITES[0][1] != null) {
+                    imageFenetre = SPRITES[0][1];
                 } else {
-                    imageFenetre = intacte;
+                    imageFenetre = SPRITES[0][0];
                 }
             } else {
-                if (briseeRouge != null) {
-                    imageFenetre = briseeRouge;
+                if (SPRITES[0][2] != null) {
+                    imageFenetre = SPRITES[0][2];
                 } else {
-                    imageFenetre = intacte;
+                    imageFenetre = SPRITES[0][0];
                 }
             }
         }
-        gc.drawImage(imageFenetre, positionAfficher, y, largeur, hauteur);
+        gc.drawImage(imageFenetre, posX, posY, size.getX(),size.getY());
     }
 
-    public void drawDebuggage(GraphicsContext gc, double cameraX) {
-        double positionAfficher = x - cameraX;
-        gc.strokeRect(positionAfficher, y, largeur, hauteur);
+    public void drawDebuggage(GraphicsContext gc, Camera camera) {
+        double posX = position.getX() - camera.getX();
+        double posY = position.getY() - camera.getY();
+        gc.strokeRect(posX, posY, size.getX(), size.getY());
     }
 }

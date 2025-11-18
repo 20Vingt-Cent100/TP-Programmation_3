@@ -95,7 +95,6 @@ public class Camelot extends GameObject implements Gravity{
             speed = speed.add(0, 500);
         }
 
-
         if(Input.isPressed(KeyCode.X) && timer - throwTime > 1.5) {
             new Journal(position.getX() + size.getX() / 2., position.getY() + size.getY(), 52, 31, speed, new Point2D(150, 1100));
             throwTime = timer;
