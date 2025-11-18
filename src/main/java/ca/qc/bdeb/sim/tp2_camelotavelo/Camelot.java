@@ -9,25 +9,25 @@ public class Camelot extends GameObject implements Gravity{
 
     private final Image[][] SPRITES = {
             {
-                    new Image("assets/camelot1.png"),
-                    new Image("assets/camelot2.png")},
+                    new Image(getClass().getResourceAsStream("/assets/camelot1.png")),
+                    new Image(getClass().getResourceAsStream("/assets/camelot2.png"))},
             {
-                    new Image("assets/pixelCamelot00.png"),
-                    new Image("assets/pixelCamelot01.png"),
-                    new Image("assets/pixelCamelot02.png"),
-                    new Image("assets/pixelCamelot03.png"),
-                    new Image("assets/pixelCamelot04.png"),
-                    new Image("assets/pixelCamelot05.png"),
-                    new Image("assets/pixelCamelot06.png"),
-                    new Image("assets/pixelCamelot07.png"),
-                    new Image("assets/pixelCamelot08.png"),
-                    new Image("assets/pixelCamelot09.png"),
-                    new Image("assets/pixelCamelot10.png"),
-                    new Image("assets/pixelCamelot11.png"),
-                    new Image("assets/pixelCamelot12.png"),
-                    new Image("assets/pixelCamelot13.png"),
-                    new Image("assets/pixelCamelot14.png"),
-                    new Image("assets/pixelCamelot15.png"),
+                    new Image(getClass().getResourceAsStream("/assets/pixelCamelot00.png")),
+                    new Image(getClass().getResourceAsStream("/assets/pixelCamelot01.png")),
+                    new Image(getClass().getResourceAsStream("/assets/pixelCamelot02.png")),
+                    new Image(getClass().getResourceAsStream("/assets/pixelCamelot03.png")),
+                    new Image(getClass().getResourceAsStream("/assets/pixelCamelot04.png")),
+                    new Image(getClass().getResourceAsStream("/assets/pixelCamelot05.png")),
+                    new Image(getClass().getResourceAsStream("/assets/pixelCamelot06.png")),
+                    new Image(getClass().getResourceAsStream("/assets/pixelCamelot07.png")),
+                    new Image(getClass().getResourceAsStream("/assets/pixelCamelot08.png")),
+                    new Image(getClass().getResourceAsStream("/assets/pixelCamelot09.png")),
+                    new Image(getClass().getResourceAsStream("/assets/pixelCamelot10.png")),
+                    new Image(getClass().getResourceAsStream("/assets/pixelCamelot11.png")),
+                    new Image(getClass().getResourceAsStream("/assets/pixelCamelot12.png")),
+                    new Image(getClass().getResourceAsStream("/assets/pixelCamelot13.png")),
+                    new Image(getClass().getResourceAsStream("/assets/pixelCamelot14.png")),
+                    new Image(getClass().getResourceAsStream("/assets/pixelCamelot15.png")),
             }
     };
 
@@ -99,7 +99,7 @@ public class Camelot extends GameObject implements Gravity{
             new Journal(position.getX() + size.getX() / 2., position.getY() + size.getY(), 52, 31, speed, new Point2D(150, 1100));
             throwTime = timer;
         }
-        if(Input.isPressed(KeyCode.Z) && timer - throwTime > 1.5) {
+        if(Input.isPressed(KeyCode.Z) && timer - throwTime > 0.5) {
             new Journal(position.getX() + size.getX() / 2., position.getY() + size.getY(), 52, 31, speed, new Point2D(900, 900));
             throwTime = timer;
         }

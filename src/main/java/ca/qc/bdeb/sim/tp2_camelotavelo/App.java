@@ -13,7 +13,7 @@ import java.io.IOException;
 public class App extends Application {
     public static double WIDTH = 900, HEIGHT = 580;
     private static Stage appStageContext;
-    private static Canvas appCanvas = new Canvas(WIDTH, HEIGHT);
+    private static final Canvas APP_CANVAS = new Canvas(WIDTH, HEIGHT);
 
     private static Camera camera;
 
@@ -30,7 +30,7 @@ public class App extends Application {
         var root = new VBox();
         var defaultScene = new Scene(root, WIDTH, HEIGHT);
 
-        root.getChildren().add(appCanvas);
+        root.getChildren().add(APP_CANVAS);
 
         appStageContext.setTitle("Camelot");
         appStageContext.setScene(defaultScene);
@@ -51,7 +51,7 @@ public class App extends Application {
     }
 
     private void gameLoop(){
-        var graphicContext = appCanvas.getGraphicsContext2D();
+        var graphicContext = APP_CANVAS.getGraphicsContext2D();
 
         Time.loadPastTime();
         var loop = new AnimationTimer(){
