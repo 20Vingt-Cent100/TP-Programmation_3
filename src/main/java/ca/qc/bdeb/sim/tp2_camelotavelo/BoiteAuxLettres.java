@@ -4,33 +4,33 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class BoiteAuxLettres {
+public class BoiteAuxLettres extends GameObject{
     public static final double largeur = 81;
     public static final double hauteur = 76;
 
-    private final double x;
-    private final double y;
     private final boolean abonnee;
     private boolean touchee;
     private Boolean livraisonBonne;
 
-    private final Image normale;
-    private final Image vert;
-    private final Image rouge;
+    private final Image [][] SPRITES = {
+            {
+                    new Image(getClass().getResourceAsStream("/assets/boite-aux-lettres.png")),
+                    new Image(getClass().getResourceAsStream("/assets/boite-aux-lettres-vert.png")),
+                    new Image(getClass().getResourceAsStream("/assets/boite-aux-lettres-rouge.png"))},
+            {
+    }};
 
-    public BoiteAuxLettres(double x, double y, boolean abonnee) {
-        this.x = x;
-        this.y = y;
+
+
+    public BoiteAuxLettres(double posX, double posY, boolean abonnee) {
+      super(posX,posY,largeur,hauteur);
         this.abonnee = abonnee;
-        this.normale = new Image(getClass().getResourceAsStream("/assets/boite-aux-lettres.png"));;
-        this.vert = new Image(getClass().getResourceAsStream("/assets/boite-aux-lettres-vert.png"));;
-        this.rouge = new Image(getClass().getResourceAsStream("/assets/boite-aux-lettres-rouge.png"));;
         this.touchee = false;
         this.livraisonBonne = null;
     }
 
     public Rectangle2D getLimite() {
-        return new Rectangle2D(x, y, largeur, hauteur);
+        return new Rectangle2D(position.getX(), position.getY(), size.getX(), size.getY());
     }
 
     public boolean estAbonnee() {
@@ -49,29 +49,37 @@ public class BoiteAuxLettres {
         this.touchee = true;
         this.livraisonBonne = versAbonnee;
     }
+    @Override
+    protected void update() {
 
-    public void draw(GraphicsContext gc, double cameraX) {
-        double positionAfficher = x - cameraX;
-        Image imageFenetre = normale;
-        if (livraisonBonne != null && livraisonBonne) {
-            if (vert != null) {
-                imageFenetre = vert;
-            } else {
-                imageFenetre = normale;
-            }
-        } else if (livraisonBonne != null && !livraisonBonne) {
-            if (rouge != null) {
-                imageFenetre = rouge;
-            } else {
-                imageFenetre = normale;
-            }
-        }
-        gc.drawImage(imageFenetre, positionAfficher, y, largeur, hauteur);
     }
 
-    public void drawDebuggage(GraphicsContext gc, double cameraX) {
-        double positionAfficher = x - cameraX;
-        gc.strokeRect(positionAfficher, y, largeur, hauteur);
+    public void draw(GraphicsContext gc, Camera camera) {
+        double posX = position.getX() - camera.getX();
+        double posY = position.getY() - camera.getY();
+
+        Image imageFenetre = SPRITES[0][0];
+
+        if (livraisonBonne != null && livraisonBonne) {
+            if (SPRITES[0][1] != null) {
+                imageFenetre = SPRITES[0][1];
+            } else {
+                imageFenetre = SPRITES[0][0];
+            }
+        } else if (livraisonBonne != null && !livraisonBonne) {
+            if (SPRITES[0][2] != null) {
+                imageFenetre = SPRITES[0][2];
+            } else {
+                imageFenetre = SPRITES[0][0];
+            }
+        }
+        gc.drawImage(imageFenetre, posX, posY, largeur, hauteur);
+    }
+
+    public void drawDebuggage(GraphicsContext gc, Camera camera) {
+        double posX = position.getX() - camera.getX();
+        double posY = position.getY() - camera.getY();
+        gc.strokeRect(posX, posY, size.getX(), size.getY());
     }
 
 }
