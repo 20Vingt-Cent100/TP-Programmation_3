@@ -7,7 +7,6 @@ import javafx.scene.image.Image;
 public class BoiteAuxLettres extends GameObject{
     public static final double largeur = 81;
     public static final double hauteur = 76;
-
     private final boolean abonnee;
     private boolean touchee;
     private Boolean livraisonBonne;

@@ -8,24 +8,29 @@ import javafx.scene.text.TextAlignment;
 
 import java.util.List;
 
-public class Maison {
- private final double base;
+public class Maison extends GameObject {
+ private final double posX;
+ private final double posY;
  private final int adresse;
  private final boolean abonnee;
+ private static final double largeur=120;
+ private static final double hauteur =220;
 
  private final BoiteAuxLettres boite;
  private final List<Fenetre> fenetres;
 
- public Maison(double base, int adresse, boolean abonnee, BoiteAuxLettres boite, List<Fenetre> fenetres) {
-     this.base = base;
+ public Maison(double posX, double posY, int adresse, boolean abonnee, BoiteAuxLettres boite, List<Fenetre> fenetres) {
+    super(posX, posY - hauteur,largeur, hauteur);
+     this.posX = posX;
+     this.posY = posY;
      this.adresse = adresse;
      this.abonnee = abonnee;
      this.boite = boite;
      this.fenetres = fenetres;
  }
 
- public double getBase() {
-     return base;
+ public double getPosX() {
+     return posX;
  }
 
  public double getAdresse() {
@@ -41,22 +46,27 @@ public class Maison {
      return fenetres;
  }
 
- public void draw (GraphicsContext gc , double cameraX, double solY) {
-     double positionX = base - cameraX;
-     double largeurPorte = 120;
-     double hauteurPorte =220;
+ @Override
+ protected void update(){
+
+ }
+
+ public void draw (GraphicsContext gc , Camera camera) {
+     double positionX = position.getX() - camera.getX();
+     double largeurPorte = size.getX();
+     double hauteurPorte =size.getY();
      double positionPorteX = positionX;
-     double largeurPorteY = solY - hauteurPorte;
+     double positionPorteY = posY - hauteurPorte;
 
      gc.setFill(Color.rgb(119,60,5));
-     gc.fillRect(positionPorteX - 5, solY - 10, largeurPorte + 10, 10);
+     gc.fillRect(positionPorteX - 5, posY - 10, largeurPorte + 10, 10);
 
      gc.setFill(Color.rgb(119,60,5));
-     gc.fillRect(positionPorteX, largeurPorteY, largeurPorte, hauteurPorte);
+     gc.fillRect(positionPorteX, positionPorteY, largeurPorte, hauteurPorte);
 
      double rayonPoignie = 12;
      double poignieX = positionPorteX + largeurPorte * 0.22;
-     double poignieY = solY - hauteurPorte * 0.55;
+     double poignieY = posY - hauteurPorte * 0.55;
 
      gc.setFill(Color.rgb(200, 101, 8));
      gc.setFill(Color.rgb(210, 160, 90, 0.9));
@@ -69,16 +79,17 @@ public class Maison {
      gc.setTextBaseline(VPos.TOP);
      gc.fillText(Integer.toString(adresse),
              positionPorteX + largeurPorte / 2.0,
-             largeurPorteY + 10);
-     boite.draw(gc, cameraX);
+             positionPorteY + 10);
+
+     boite.draw(gc, camera);
      for (Fenetre f : fenetres) {
-         f.draw(gc, cameraX);
+         f.draw(gc, camera);
      }
  }
-    public void drawDebuggage(GraphicsContext gc, double cameraX) {
-        boite.drawDebuggage(gc, cameraX);
+    public void drawDebuggage(GraphicsContext gc,Camera camera) {
+        boite.drawDebuggage(gc, camera);
         for (Fenetre f : fenetres) {
-            f.drawDebuggage(gc, cameraX);
+            f.drawDebuggage(gc, camera);
         }
     }
 
