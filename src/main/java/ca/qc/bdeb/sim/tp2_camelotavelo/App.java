@@ -52,6 +52,9 @@ public class App extends Application {
         camera = new Camera(camelot);
         Journal.setMass();
         UI ui = new UI(0, HEIGHT, WIDTH, 75);
+        UI.maisons = maisons;
+        UI.journauxInventaire=12;
+        UI.argent=0;
         }
 
     private void gameLoop(){
