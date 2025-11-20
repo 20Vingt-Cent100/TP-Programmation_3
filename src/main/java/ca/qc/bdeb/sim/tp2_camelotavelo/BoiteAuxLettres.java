@@ -19,8 +19,6 @@ public class BoiteAuxLettres extends GameObject implements Collidable{
             {
     }};
 
-
-
     public BoiteAuxLettres(double posX, double posY, boolean abonnee) {
       super(posX,posY,largeur,hauteur);
         this.abonnee = abonnee;

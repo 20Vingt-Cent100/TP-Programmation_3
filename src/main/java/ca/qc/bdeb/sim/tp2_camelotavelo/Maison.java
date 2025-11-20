@@ -105,7 +105,4 @@ public class Maison extends GameObject {
             f.drawDebuggage(gc, camera);
         }
     }
-
-
-
 }

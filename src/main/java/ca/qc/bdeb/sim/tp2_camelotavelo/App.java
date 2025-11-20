@@ -46,13 +46,13 @@ public class App extends Application {
 
     private void initGameObjects(){
         Wall wall = new Wall(0,0, 192, 96);
+        Random rand = new Random();
+        List<Maison> maisons = Maison.genererMaisons(12,HEIGHT,350,rand);
         Camelot camelot = new Camelot(0, 0, 172, 144);
         camera = new Camera(camelot);
         Journal.setMass();
         UI ui = new UI(0, HEIGHT, WIDTH, 75);
-        Random rand = new Random();
-        List<Maison> maisons = Maison.genererMaisons(12,HEIGHT,0,rand);
-    }
+        }
 
     private void gameLoop(){
         var graphicContext = APP_CANVAS.getGraphicsContext2D();
