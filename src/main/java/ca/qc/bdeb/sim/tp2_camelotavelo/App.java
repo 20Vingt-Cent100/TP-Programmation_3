@@ -9,6 +9,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class App extends Application {
     public static double WIDTH = 900, HEIGHT = 580;
@@ -46,8 +49,9 @@ public class App extends Application {
         Camelot camelot = new Camelot(0, 0, 172, 144);
         camera = new Camera(camelot);
         Journal.setMass();
-
         UI ui = new UI(0, HEIGHT, WIDTH, 75);
+        Random rand = new Random();
+        List<Maison> maisons = Maison.genererMaisons(12,HEIGHT,0,rand);
     }
 
     private void gameLoop(){

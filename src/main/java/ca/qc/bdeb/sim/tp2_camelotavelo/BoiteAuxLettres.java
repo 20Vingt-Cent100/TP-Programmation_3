@@ -4,7 +4,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class BoiteAuxLettres extends GameObject{
+public class BoiteAuxLettres extends GameObject implements Collidable{
     public static final double largeur = 81;
     public static final double hauteur = 76;
     private final boolean abonnee;
@@ -28,8 +28,16 @@ public class BoiteAuxLettres extends GameObject{
         this.livraisonBonne = null;
     }
 
+    @Override
     public Rectangle2D getLimite() {
         return new Rectangle2D(position.getX(), position.getY(), size.getX(), size.getY());
+    }
+    @Override
+    public void isColliding(GameObject other) {
+        if (!(other instanceof Journal)) return;
+        if (touchee) return;
+        touchee = true;
+        this.livraisonBonne = !abonnee;
     }
 
     public boolean estAbonnee() {
@@ -44,10 +52,7 @@ public class BoiteAuxLettres extends GameObject{
         return livraisonBonne;
     }
 
-    public void livrer(boolean versAbonnee) {
-        this.touchee = true;
-        this.livraisonBonne = versAbonnee;
-    }
+
     @Override
     protected void update() {
 

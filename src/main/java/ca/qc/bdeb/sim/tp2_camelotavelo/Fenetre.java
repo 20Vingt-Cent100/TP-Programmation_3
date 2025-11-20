@@ -4,7 +4,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Fenetre extends GameObject {
+public class Fenetre extends GameObject implements Collidable {
     public static final double largeur = 159;
     public static final double hauteur = 130;
 
@@ -28,19 +28,23 @@ public class Fenetre extends GameObject {
         this.bonneCasse = null;
     }
 
+    @Override
     public Rectangle2D getLimite() {
         return new Rectangle2D(position.getX(), position.getY() , largeur, hauteur);
     }
 
-    public void casser(boolean bonne) {
-        this.brisee = true;
-        this.bonneCasse = bonne;
+    @Override
+    public void isColliding(GameObject other) {
+        if (!(other instanceof Journal)) return;
+        if (brisee) return;
+        brisee = true;
+        this.bonneCasse = abonnee;
     }
 
+    public boolean bonneCasse() {return bonneCasse;}
     public boolean estBrisee() {
         return brisee;
     }
-
     public boolean estAbonnee() {
         return abonnee;
     }

@@ -1,6 +1,7 @@
 package ca.qc.bdeb.sim.tp2_camelotavelo;
 
 import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -26,8 +27,24 @@ public class Journal extends GameObject implements Gravity{
         position = position.add(speed.multiply(Time.deltaTimeSec));
         speed = speed.add(acceleration.multiply(Time.deltaTimeSec));
 
-        if(position.getY() < 0)
+        if (position.getY() < 0) {
             this.delete();
+            return;
+        }
+
+        Rectangle2D limites   = new Rectangle2D(position.getX(),position.getY(),size.getX(),size.getY());
+
+        for (GameObject gameObject : GameObject.getGameObjectArray()){
+            if (gameObject == this){continue;}
+
+            if (gameObject instanceof Collidable cible){
+                if (limites.intersects(cible.getLimite())){
+                    cible.isColliding(this);
+                    this.delete();
+                    break;
+                }
+            }
+        }
     }
 
     @Override
