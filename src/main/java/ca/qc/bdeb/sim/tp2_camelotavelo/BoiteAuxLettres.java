@@ -30,6 +30,7 @@ public class BoiteAuxLettres extends GameObject implements Collidable{
     public Rectangle2D getLimite() {
         return new Rectangle2D(position.getX(), position.getY(), size.getX(), size.getY());
     }
+
     @Override
     public void isColliding(GameObject other) {
         if (!(other instanceof Journal)) return;
@@ -62,7 +63,7 @@ public class BoiteAuxLettres extends GameObject implements Collidable{
 
     public void draw(GraphicsContext gc, Camera camera) {
         double posX = position.getX() - camera.getX();
-        double posY = position.getY() - camera.getY();
+        double posY = position.getY();
 
         Image imageFenetre = SPRITES[0][0];
 
@@ -84,7 +85,7 @@ public class BoiteAuxLettres extends GameObject implements Collidable{
 
     public void drawDebuggage(GraphicsContext gc, Camera camera) {
         double posX = position.getX() - camera.getX();
-        double posY = position.getY() - camera.getY();
+        double posY = position.getY();
         gc.strokeRect(posX, posY, size.getX(), size.getY());
     }
 
