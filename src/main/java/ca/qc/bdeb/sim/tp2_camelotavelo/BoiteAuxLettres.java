@@ -35,7 +35,12 @@ public class BoiteAuxLettres extends GameObject implements Collidable{
         if (!(other instanceof Journal)) return;
         if (touchee) return;
         touchee = true;
-        this.livraisonBonne = !abonnee;
+        if (abonnee) {
+            livraisonBonne = true;
+            UI.argent += 1;
+        } else {
+            livraisonBonne = false;
+        }
     }
 
     public boolean estAbonnee() {
@@ -49,7 +54,6 @@ public class BoiteAuxLettres extends GameObject implements Collidable{
     public Boolean livraisonBonne() {
         return livraisonBonne;
     }
-
 
     @Override
     protected void update() {

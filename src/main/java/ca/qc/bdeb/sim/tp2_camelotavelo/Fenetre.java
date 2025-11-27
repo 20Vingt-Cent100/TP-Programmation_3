@@ -36,9 +36,17 @@ public class Fenetre extends GameObject implements Collidable {
     @Override
     public void isColliding(GameObject other) {
         if (!(other instanceof Journal)) return;
-        if (brisee) return;
+        if (brisee) return;                 // déjà brisée → on ne recompte pas
+
         brisee = true;
-        this.bonneCasse = abonnee;
+
+        if (abonnee) {
+            bonneCasse = false;
+            UI.argent -= 2;
+        } else {
+            bonneCasse = true;
+            UI.argent += 2;
+        }
     }
 
     public boolean bonneCasse() {return bonneCasse;}
