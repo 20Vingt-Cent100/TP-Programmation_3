@@ -3,8 +3,10 @@ package ca.qc.bdeb.sim.tp2_camelotavelo;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
-public class Fenetre extends GameObject implements Collidable {
+public class Fenetre extends GameObject implements Collidable, Debuggable {
     public static final double largeur = 159;
     public static final double hauteur = 130;
 
@@ -51,8 +53,6 @@ public class Fenetre extends GameObject implements Collidable {
 
     @Override
     public void draw(GraphicsContext gc, Camera camera) {
-        double posX = position.getX() - camera.getX();
-        double posY = position.getY();
 
         Image imageFenetre = SPRITES[0][0];
 
@@ -71,12 +71,19 @@ public class Fenetre extends GameObject implements Collidable {
                 }
             }
         }
-        gc.drawImage(imageFenetre, posX, posY, size.getX(),size.getY());
+        gc.drawImage(imageFenetre,
+                position.getX() - camera.getX(),
+                gc.getCanvas().getHeight() -(size.getY()+position.getY())
+        );
     }
 
-    public void drawDebuggage(GraphicsContext gc, Camera camera) {
-        double posX = position.getX() - camera.getX();
-        double posY = position.getY();
-        gc.strokeRect(posX, posY, size.getX(), size.getY());
+    @Override
+    public void drawDebugState(GraphicsContext gc, Camera camera) {
+        gc.setStroke(Color.YELLOW);
+        gc.fillRect(hitBoxe.getMinX() - camera.getX(),
+                gc.getCanvas().getHeight() -(hitBoxe.getHeight()+hitBoxe.getMinY()),
+                hitBoxe.getWidth(),
+                hitBoxe.getHeight()
+        );
     }
 }

@@ -3,8 +3,9 @@ package ca.qc.bdeb.sim.tp2_camelotavelo;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
+
 import java.util.ArrayList;
-import java.util.Objects;
 
 public abstract class GameObject {
     private final static ArrayList<GameObject> GAME_OBJECT_ARRAY_LIST = new ArrayList<>();
@@ -12,6 +13,7 @@ public abstract class GameObject {
     private final static ArrayList<GameObject> TEMP_REMOVE_LIST = new ArrayList<>();
 
     protected static int imgIndex = 0;
+    private static boolean isDebugStateActive = false;
 
     protected Point2D position;
     protected Point2D size;
@@ -30,6 +32,11 @@ public abstract class GameObject {
     }
 
     public static void updateAll(){
+
+        if (Input.isPressed(KeyCode.D)){
+            isDebugStateActive = true;
+        }
+
         GAME_OBJECT_ARRAY_LIST.addAll(TEMP_ADD_LIST);
         TEMP_ADD_LIST.clear();
 
@@ -67,7 +74,14 @@ public abstract class GameObject {
 
     public static void drawAll(GraphicsContext graphicsContext, Camera camera){
         camera.updateFov();
-        GAME_OBJECT_ARRAY_LIST.forEach(object -> object.draw(graphicsContext, camera));
+        GAME_OBJECT_ARRAY_LIST.forEach(object -> {
+            object.draw(graphicsContext, camera);
+
+            if (isDebugStateActive && object instanceof Debuggable debuggable) {
+                debuggable.drawDebugState(graphicsContext, camera);
+                System.out.println("Debug activated");
+            }
+        });
     }
 
     protected static ArrayList<GameObject> getGameObjectArray(){

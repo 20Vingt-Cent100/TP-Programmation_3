@@ -3,8 +3,9 @@ package ca.qc.bdeb.sim.tp2_camelotavelo;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
-public class BoiteAuxLettres extends GameObject implements Collidable{
+public class BoiteAuxLettres extends GameObject implements Collidable, Debuggable{
     public static final double largeur = 81;
     public static final double hauteur = 76;
     private final boolean abonnee;
@@ -71,13 +72,19 @@ public class BoiteAuxLettres extends GameObject implements Collidable{
                 imageFenetre = SPRITES[0][0];
             }
         }
-        gc.drawImage(imageFenetre, posX, posY, largeur, hauteur);
+        gc.drawImage(imageFenetre,
+                position.getX() - camera.getX(),
+                gc.getCanvas().getHeight() -(size.getY()+position.getY())
+        );
     }
 
-    public void drawDebuggage(GraphicsContext gc, Camera camera) {
-        double posX = position.getX() - camera.getX();
-        double posY = position.getY() - camera.getY();
-        gc.strokeRect(posX, posY, size.getX(), size.getY());
+    @Override
+    public void drawDebugState(GraphicsContext gc, Camera camera) {
+        gc.setStroke(Color.YELLOW);
+        gc.fillRect(hitBoxe.getMinX() - camera.getX(),
+                gc.getCanvas().getHeight() -(hitBoxe.getHeight()+hitBoxe.getMinY()),
+                hitBoxe.getWidth(),
+                hitBoxe.getHeight()
+        );
     }
-
 }

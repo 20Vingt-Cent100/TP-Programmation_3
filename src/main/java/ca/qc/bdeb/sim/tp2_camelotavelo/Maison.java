@@ -39,7 +39,7 @@ public class Maison extends GameObject {
 
          List<Fenetre> fenetres = new ArrayList<>();
          int nbFenetres = random.nextInt(3); // 0,1,2
-         double yFenetre = 50;
+         double yFenetre = 300;
          if (nbFenetres >= 1) {
              fenetres.add(new Fenetre(baseX + 300, yFenetre, abonnee));
          }
@@ -96,11 +96,5 @@ public class Maison extends GameObject {
         gc.fillText(Integer.toString(adresse),
                 positionX + largeurPorte / 2.0,
                 positionY + 10);
-    }
-    public void drawDebuggage(GraphicsContext gc,Camera camera) {
-        boite.drawDebuggage(gc, camera);
-        for (Fenetre f : fenetres) {
-            f.drawDebuggage(gc, camera);
-        }
     }
 }
