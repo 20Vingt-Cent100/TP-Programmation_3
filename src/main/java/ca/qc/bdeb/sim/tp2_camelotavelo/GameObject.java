@@ -84,10 +84,6 @@ public abstract class GameObject {
         });
     }
 
-    protected static ArrayList<GameObject> getGameObjectArray(){
-        return GAME_OBJECT_ARRAY_LIST;
-    }
-
     private static boolean isColliding(GameObject obj1, GameObject obj2){
         return obj1.hitBoxe.intersects(obj2.hitBoxe);
     }

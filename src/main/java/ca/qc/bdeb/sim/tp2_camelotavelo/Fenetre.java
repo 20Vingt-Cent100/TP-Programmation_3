@@ -86,7 +86,7 @@ public class Fenetre extends GameObject implements Collidable, Debuggable {
     @Override
     public void drawDebugState(GraphicsContext gc, Camera camera) {
         gc.setStroke(Color.YELLOW);
-        gc.fillRect(hitBoxe.getMinX() - camera.getX(),
+        gc.strokeRect(hitBoxe.getMinX() - camera.getX(),
                 gc.getCanvas().getHeight() -(hitBoxe.getHeight()+hitBoxe.getMinY()),
                 hitBoxe.getWidth(),
                 hitBoxe.getHeight()
