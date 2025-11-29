@@ -73,6 +73,8 @@ public class App extends Application {
                 GameObject.updateAll();
                 GameObject.checkCollision();
                 GameObject.drawAll(graphicContext, camera);
+
+                Input.endOfFrame();
             }
         };
         loop.start();
@@ -84,9 +86,5 @@ public class App extends Application {
 
     public static void changeScene(Scene gameScene){
         appStageContext.setScene(gameScene);
-
-        //Scene Event Listeners
-        gameScene.setOnKeyPressed((k) -> Input.addKey(k.getCode()));
-        gameScene.setOnKeyReleased((k) -> Input.removeKey(k.getCode()));
     }
 }

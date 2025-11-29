@@ -33,8 +33,12 @@ public abstract class GameObject {
 
     public static void updateAll(){
 
-        if (Input.isPressed(KeyCode.D)){
-            isDebugStateActive = true;
+        if (Input.isPressed(KeyCode.D) && !Input.wasPressed(KeyCode.D)){
+            isDebugStateActive = !isDebugStateActive;
+        }
+
+        if (Input.isPressed(KeyCode.P) && !Input.wasPressed(KeyCode.P)){
+            imgIndex = -imgIndex + 1;
         }
 
         GAME_OBJECT_ARRAY_LIST.addAll(TEMP_ADD_LIST);
@@ -79,7 +83,6 @@ public abstract class GameObject {
 
             if (isDebugStateActive && object instanceof Debuggable debuggable) {
                 debuggable.drawDebugState(graphicsContext, camera);
-                System.out.println("Debug activated");
             }
         });
     }

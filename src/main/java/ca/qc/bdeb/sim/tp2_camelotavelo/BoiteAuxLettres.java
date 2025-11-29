@@ -59,9 +59,6 @@ public class BoiteAuxLettres extends GameObject implements Collidable, Debuggabl
     }
 
     public void draw(GraphicsContext gc, Camera camera) {
-        double posX = position.getX() - camera.getX();
-        double posY = position.getY();
-
         Image imageFenetre = SPRITES[0][0];
 
         if (livraisonBonne != null && livraisonBonne) {

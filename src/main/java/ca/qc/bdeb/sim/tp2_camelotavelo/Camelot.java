@@ -80,27 +80,29 @@ public class Camelot extends GameObject implements Gravity{
     }
 
     private void handleInput(){
-        if(Input.isPressed(KeyCode.D) || Input.isPressed(KeyCode.RIGHT)) {
+        if(Input.isPressed(KeyCode.RIGHT)) {
             acceleration = new Point2D(300, acceleration.getY());
-        }else if (acceleration.getX() == 300)
-            acceleration = new Point2D(0, acceleration.getY());
-
-        if(Input.isPressed(KeyCode.A) || Input.isPressed(KeyCode.LEFT)) {
+        }else if (speed.getX() > 400)
             acceleration = new Point2D(-300, acceleration.getY());
-        }else if (acceleration.getX() == -300)
-            acceleration = new Point2D(0, acceleration.getY());
 
-        if(isGrounded && (Input.isPressed(KeyCode.W) || (Input.isPressed(KeyCode.SPACE) || (Input.isPressed(KeyCode.UP))))) {
+        if(Input.isPressed(KeyCode.LEFT)) {
+            acceleration = new Point2D(-300, acceleration.getY());
+        }else if (speed.getX() < 400)
+            acceleration = new Point2D(+300, acceleration.getY());
+
+        if(isGrounded && ((Input.isPressed(KeyCode.SPACE) || (Input.isPressed(KeyCode.UP))))) {
             isGrounded = false;
             speed = speed.add(0, 500);
         }
-        boolean journeuxDisponible = UI.journauxInventaire > 0;
-        if(journeuxDisponible && Input.isPressed(KeyCode.X) && timer - throwTime > 1.5) {
+
+        boolean isJournalAvailable = UI.journauxInventaire > 0;
+
+        if(isJournalAvailable && Input.isPressed(KeyCode.X) && timer - throwTime > 0.5) {
             new Journal(position.getX() + size.getX() / 2., position.getY() + size.getY(), 52, 31, speed, new Point2D(150, 1100));
             UI.journauxInventaire--;
             throwTime = timer;
         }
-        if(journeuxDisponible && Input.isPressed(KeyCode.Z) && timer - throwTime > 0.5) {
+        if(isJournalAvailable && Input.isPressed(KeyCode.Z) && timer - throwTime > 0.5) {
             new Journal(position.getX() + size.getX() / 2., position.getY() + size.getY(), 52, 31, speed, new Point2D(900, 900));
             UI.journauxInventaire--;
             throwTime = timer;
