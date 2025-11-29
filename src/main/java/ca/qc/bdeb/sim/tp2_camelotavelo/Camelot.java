@@ -94,13 +94,15 @@ public class Camelot extends GameObject implements Gravity{
             isGrounded = false;
             speed = speed.add(0, 500);
         }
-
-        if(Input.isPressed(KeyCode.X) && timer - throwTime > 1.5) {
+        boolean journeuxDisponible = UI.journauxInventaire > 0;
+        if(journeuxDisponible && Input.isPressed(KeyCode.X) && timer - throwTime > 1.5) {
             new Journal(position.getX() + size.getX() / 2., position.getY() + size.getY(), 52, 31, speed, new Point2D(150, 1100));
+            UI.journauxInventaire--;
             throwTime = timer;
         }
-        if(Input.isPressed(KeyCode.Z) && timer - throwTime > 0.5) {
+        if(journeuxDisponible && Input.isPressed(KeyCode.Z) && timer - throwTime > 0.5) {
             new Journal(position.getX() + size.getX() / 2., position.getY() + size.getY(), 52, 31, speed, new Point2D(900, 900));
+            UI.journauxInventaire--;
             throwTime = timer;
         }
     }

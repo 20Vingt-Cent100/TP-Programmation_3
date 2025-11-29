@@ -35,9 +35,7 @@ public class Maison extends GameObject {
          int adresse = adresseInitiale + 2 * i;
          boolean abonnee = random.nextBoolean();
          double yBoite = hauteurFenetreJeu * (0.2 + 0.5 * random.nextDouble());
-         BoiteAuxLettres boite = new BoiteAuxLettres(
-                 baseX + 200, yBoite, abonnee
-         );
+         BoiteAuxLettres boite = new BoiteAuxLettres(baseX + 200, yBoite, abonnee);
 
          List<Fenetre> fenetres = new ArrayList<>();
          int nbFenetres = random.nextInt(3); // 0,1,2
