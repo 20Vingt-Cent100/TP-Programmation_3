@@ -29,16 +29,11 @@ public class Fenetre extends GameObject implements Collidable {
     }
 
     @Override
-    public Rectangle2D getLimite() {
-        return new Rectangle2D(position.getX(), position.getY() , largeur, hauteur);
-    }
-
-    @Override
     public void isColliding(GameObject other) {
-        if (!(other instanceof Journal)) return;
-        if (brisee) return;
-        brisee = true;
-        this.bonneCasse = abonnee;
+        if (other instanceof Journal){
+            brisee = true;
+            this.bonneCasse = abonnee;
+        }
     }
 
     public boolean bonneCasse() {return bonneCasse;}
@@ -57,7 +52,7 @@ public class Fenetre extends GameObject implements Collidable {
     @Override
     public void draw(GraphicsContext gc, Camera camera) {
         double posX = position.getX() - camera.getX();
-        double posY = position.getY() - camera.getY();
+        double posY = position.getY();
 
         Image imageFenetre = SPRITES[0][0];
 
@@ -81,7 +76,7 @@ public class Fenetre extends GameObject implements Collidable {
 
     public void drawDebuggage(GraphicsContext gc, Camera camera) {
         double posX = position.getX() - camera.getX();
-        double posY = position.getY() - camera.getY();
+        double posY = position.getY();
         gc.strokeRect(posX, posY, size.getX(), size.getY());
     }
 }

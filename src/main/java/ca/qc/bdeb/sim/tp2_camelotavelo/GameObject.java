@@ -1,6 +1,7 @@
 package ca.qc.bdeb.sim.tp2_camelotavelo;
 
 import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -14,6 +15,7 @@ public abstract class GameObject {
 
     protected Point2D position;
     protected Point2D size;
+    protected Rectangle2D hitBoxe;
 
     protected abstract void update();
     protected abstract void draw(GraphicsContext graphicsContext, Camera camera);
@@ -24,6 +26,7 @@ public abstract class GameObject {
 
         position = new Point2D(posX, posY);
         size = new Point2D(width, height);
+        hitBoxe = new Rectangle2D(posX, posY, width, height);
     }
 
     public static void updateAll(){
@@ -40,8 +43,26 @@ public abstract class GameObject {
                         ((Gravity) g).applyGravity();
 
                     g.update();
+                    g.updateHitboxe();
                 }
         );
+    }
+
+    public static void checkCollision(){
+        for (int i = 0; i < GAME_OBJECT_ARRAY_LIST.size() - 1; i++){
+            for (int j = i + 1; j < GAME_OBJECT_ARRAY_LIST.size(); j++) {
+
+                GameObject obj1 = GAME_OBJECT_ARRAY_LIST.get(i);
+                GameObject obj2 = GAME_OBJECT_ARRAY_LIST.get(j);
+
+                if(isColliding(obj1, obj2)){
+                    if(obj1 instanceof Collidable collidableObj)
+                        collidableObj.isColliding(obj2);
+                    if(obj2 instanceof Collidable collidableObj)
+                        collidableObj.isColliding(obj1);
+                }
+            }
+        }
     }
 
     public static void drawAll(GraphicsContext graphicsContext, Camera camera){
@@ -53,7 +74,11 @@ public abstract class GameObject {
         return GAME_OBJECT_ARRAY_LIST;
     }
 
-    protected String getImagePath(String imagePath){
-        return Objects.requireNonNull(this.getClass().getResourceAsStream("assets/" + imagePath)).toString();
+    private static boolean isColliding(GameObject obj1, GameObject obj2){
+        return obj1.hitBoxe.intersects(obj2.hitBoxe);
+    }
+
+    private void updateHitboxe(){
+        hitBoxe = new Rectangle2D(position.getX(), position.getY(), size.getX(), size.getY());
     }
 }

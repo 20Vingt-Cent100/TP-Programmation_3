@@ -71,6 +71,7 @@ public class App extends Application {
                 Time.deltaTime(now);
 
                 GameObject.updateAll();
+                GameObject.checkCollision();
                 GameObject.drawAll(graphicContext, camera);
             }
         };
