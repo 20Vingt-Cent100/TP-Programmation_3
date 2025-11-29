@@ -32,7 +32,12 @@ public class BoiteAuxLettres extends GameObject implements Collidable, Debuggabl
         if (!(other instanceof Journal)) return;
         if (touchee) return;
         touchee = true;
-        this.livraisonBonne = !abonnee;
+        if (abonnee) {
+            livraisonBonne = true;
+            UI.argent += 1;
+        } else {
+            livraisonBonne = false;
+        }
     }
 
     public boolean estAbonnee() {

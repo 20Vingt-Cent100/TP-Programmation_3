@@ -34,7 +34,13 @@ public class Fenetre extends GameObject implements Collidable, Debuggable {
     public void isColliding(GameObject other) {
         if (other instanceof Journal){
             brisee = true;
-            this.bonneCasse = abonnee;
+            if (abonnee) {
+                bonneCasse = false;
+                UI.argent -= 2;
+            } else {
+                bonneCasse = true;
+                UI.argent += 2;
+            }
         }
     }
 
