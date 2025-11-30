@@ -1,8 +1,8 @@
-# TP2 - Camelot � v�lo #
+# TP2 - Camelot à vélo
 ---
 ## Informations
 C'est un petit jeu créer dans le cadre du cours de programmation 420-SF3-RE du Collège Bois-de-Boulogne.
----
+
 ## But du jeu
 Vous jouez un camelot qui livre des journaux et tente de faire le plus de profit.
 Vous devez donc distribuer les journaux à la liste de maison donné.
