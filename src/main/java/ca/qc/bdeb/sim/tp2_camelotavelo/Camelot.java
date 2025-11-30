@@ -38,6 +38,7 @@ public class Camelot extends GameObject implements Gravity{
 
     private Point2D speed;
     private Point2D acceleration;
+    private float speedThrowFactor = 1;
 
     public Camelot(double posX, double posY, double width, double height) {
         super(posX, posY, width, height);
@@ -95,12 +96,22 @@ public class Camelot extends GameObject implements Gravity{
             speed = speed.add(0, 500);
         }
 
+        speedThrowFactor = Input.isPressed(KeyCode.SHIFT)? 1.5f : 1.f;
+
         if(Input.isPressed(KeyCode.X) && timer - throwTime > 0.5) {
-            new Journal(position.getX() + size.getX() / 2., position.getY() + size.getY(), 52, 31, speed, new Point2D(150, 1100));
+            new Journal(position.getX() + size.getX() / 2.,
+                    position.getY() + size.getY(),
+                    52, 31, speed,
+                    new Point2D(150, 1100).multiply(speedThrowFactor));
+
             throwTime = timer;
         }
         if(Input.isPressed(KeyCode.Z) && timer - throwTime > 0.5) {
-            new Journal(position.getX() + size.getX() / 2., position.getY() + size.getY(), 52, 31, speed, new Point2D(900, 900));
+            new Journal(position.getX() + size.getX() / 2.,
+                    position.getY() + size.getY(),
+                    52, 31, speed,
+                    new Point2D(900, 900).multiply(speedThrowFactor));
+
             throwTime = timer;
         }
     }
