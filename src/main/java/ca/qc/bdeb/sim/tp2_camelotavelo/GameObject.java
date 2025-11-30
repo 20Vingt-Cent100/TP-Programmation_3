@@ -52,10 +52,7 @@ public abstract class GameObject {
                     g.updateHitboxe();
                 }
         );
-        if (etatDebugChamp) {
-           /* ParticuleChargee.drawDebugageChamp(GraphicsContext graphicsContext, Camera camera);
-           faut faire un debugage all qui prends en compte la camera et le gc */
-        }
+
     }
 
     public static void checkCollision(){
@@ -85,6 +82,9 @@ public abstract class GameObject {
                 camera.drawDebugState(graphicsContext, camera);
             }
         });
+        if (etatDebugChamp) {
+           ParticuleChargee.drawDebugageChamp(graphicsContext, camera);
+        }
     }
 
     protected static java.util.ArrayList<GameObject> getGameObjects() {

@@ -68,6 +68,7 @@ public class Jeu {
         if (!maisons.isEmpty()) {
             double baseDerniereMaison = maisons.get(maisons.size() - 1).getBaseX();
             positionFinNiveau = baseDerniereMaison + 1.5 * App.WIDTH;
+            ParticuleChargee.setNiveauWidth(positionFinNiveau);
         } else {
             positionFinNiveau = 3 * App.WIDTH;
         }
@@ -135,7 +136,6 @@ public class Jeu {
     private void drawJeu(GraphicsContext gc) {
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, App.WIDTH, App.HEIGHT);
-
         GameObject.drawAll(gc, camera);
     }
 
