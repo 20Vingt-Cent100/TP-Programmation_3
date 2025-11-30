@@ -19,8 +19,9 @@ Mais, **Attention, si vous casser une fenêtre et que la maison est présente da
 
 ## Commandes
 
-```$\rightarrow$``` pour accélerer
+```→``` pour accélerer
+```←``` pour ralentir
+```↑``` ou ```espace``` pour sauter
 
-```$\leftarrow$``` pour ralentir
 
 
