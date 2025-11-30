@@ -14,6 +14,7 @@ public abstract class GameObject {
 
     protected static int imgIndex = 0;
     private static boolean isDebugStateActive = false;
+    private static boolean etatDebugChamp = false;
 
     protected Point2D position;
     protected Point2D size;
@@ -51,6 +52,10 @@ public abstract class GameObject {
                     g.updateHitboxe();
                 }
         );
+        if (etatDebugChamp) {
+           /* ParticuleChargee.drawDebugageChamp(GraphicsContext graphicsContext, Camera camera);
+           faut faire un debugage all qui prends en compte la camera et le gc */
+        }
     }
 
     public static void checkCollision(){
@@ -82,6 +87,16 @@ public abstract class GameObject {
         });
     }
 
+    protected static java.util.ArrayList<GameObject> getGameObjects() {
+        return GAME_OBJECT_ARRAY_LIST;
+    }
+
+    public static void clearAll() {
+        GAME_OBJECT_ARRAY_LIST.clear();
+        TEMP_ADD_LIST.clear();
+        TEMP_REMOVE_LIST.clear();
+    }
+
     private static boolean isColliding(GameObject obj1, GameObject obj2){
         return obj1.hitBoxe.intersects(obj2.hitBoxe);
     }
@@ -106,5 +121,12 @@ public abstract class GameObject {
         if (Input.isPressed(KeyCode.K) && !Input.wasPressed(KeyCode.K)){
             Journal.emptyJournals();
         }
+        if (Input.isPressed(KeyCode.F) && !Input.wasPressed(KeyCode.F)) {
+            etatDebugChamp = !etatDebugChamp;
+        }
+        if (Input.isPressed(KeyCode.I) && !Input.wasPressed(KeyCode.I)) {
+            ParticuleChargee.testParticles();
+        }
     }
+    // TODO: Faire le debbuagge des particules ca marche pas et debegage des nivaux TOUCHE I, L , F
 }

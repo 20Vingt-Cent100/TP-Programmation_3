@@ -1,7 +1,6 @@
 package ca.qc.bdeb.sim.tp2_camelotavelo;
 
 import javafx.geometry.Point2D;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -11,6 +10,7 @@ import java.util.Random;
 public class Journal extends GameObject implements Gravity, Collidable, Debuggable {
     private static int journalCount = 0;
     private static float mass;
+    private static final double Charge = 900.0;
 
     private Image sprite = new Image(getClass().getResourceAsStream("/assets/journal.png"));
 
@@ -30,10 +30,16 @@ public class Journal extends GameObject implements Gravity, Collidable, Debuggab
         }
     }
 
+
     @Override
     protected void update() {
         position = position.add(speed.multiply(Time.deltaTimeSec));
         speed = speed.add(acceleration.multiply(Time.deltaTimeSec));
+
+        Point2D centre = position.add(size.getX() / 2.0, size.getY() / 2.0);
+        Point2D champ = ParticuleChargee.champElectrique(centre);
+        Point2D aChamp = champ.multiply(Charge / mass);
+        speed = speed.add(aChamp.multiply(Time.deltaTimeSec));
 
         if (position.getY() < 0)
             this.delete();
@@ -68,10 +74,15 @@ public class Journal extends GameObject implements Gravity, Collidable, Debuggab
         return journalCount;
     }
 
+    public static boolean journalsActive() {
+        for (GameObject g : GameObject.getGameObjects()) {
+            if (g instanceof Journal) return true;
+        }
+        return false;
+    }
+
     public static void emptyJournals(){
         journalCount = 0;
-
-        //TODO: Mettre fin au jeu
     }
 
     @Override

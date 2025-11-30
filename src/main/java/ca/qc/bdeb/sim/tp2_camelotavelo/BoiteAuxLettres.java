@@ -6,8 +6,8 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 public class BoiteAuxLettres extends GameObject implements Collidable, Debuggable{
-    public static final double largeur = 81;
-    public static final double hauteur = 76;
+    private static final double largeur = 81;
+    private static final double hauteur = 76;
     private final boolean abonnee;
     private boolean touchee;
     private Boolean livraisonBonne;
