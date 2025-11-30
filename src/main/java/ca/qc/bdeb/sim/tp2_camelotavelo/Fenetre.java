@@ -19,7 +19,7 @@ public class Fenetre extends GameObject implements Collidable, Debuggable {
                     new Image(getClass().getResourceAsStream("/assets/fenetre-brisee-vert.png")),
                     new Image(getClass().getResourceAsStream("/assets/fenetre-brisee-rouge.png"))
             },
-            {}
+            {new Image(getClass().getResourceAsStream("/assets/Window.png"))}
     };
 
 
@@ -60,20 +60,20 @@ public class Fenetre extends GameObject implements Collidable, Debuggable {
     @Override
     public void draw(GraphicsContext gc, Camera camera) {
 
-        Image imageFenetre = SPRITES[0][0];
+        Image imageFenetre = SPRITES[imgIndex][0];
 
         if (brisee && bonneCasse != null) {
             if (bonneCasse) {
                 if (SPRITES[0][1] != null) {
                     imageFenetre = SPRITES[0][1];
                 } else {
-                    imageFenetre = SPRITES[0][0];
+                    imageFenetre = SPRITES[imgIndex][0];
                 }
             } else {
                 if (SPRITES[0][2] != null) {
                     imageFenetre = SPRITES[0][2];
                 } else {
-                    imageFenetre = SPRITES[0][0];
+                    imageFenetre = SPRITES[imgIndex][0];
                 }
             }
         }

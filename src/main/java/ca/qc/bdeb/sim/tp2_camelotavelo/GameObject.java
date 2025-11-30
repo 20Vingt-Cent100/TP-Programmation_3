@@ -33,13 +33,7 @@ public abstract class GameObject {
 
     public static void updateAll(){
 
-        if (Input.isPressed(KeyCode.D) && !Input.wasPressed(KeyCode.D)){
-            isDebugStateActive = !isDebugStateActive;
-        }
-
-        if (Input.isPressed(KeyCode.P) && !Input.wasPressed(KeyCode.P)){
-            imgIndex = -imgIndex + 1;
-        }
+        handleInputs();
 
         GAME_OBJECT_ARRAY_LIST.addAll(TEMP_ADD_LIST);
         TEMP_ADD_LIST.clear();
@@ -83,6 +77,7 @@ public abstract class GameObject {
 
             if (isDebugStateActive && object instanceof Debuggable debuggable) {
                 debuggable.drawDebugState(graphicsContext, camera);
+                camera.drawDebugState(graphicsContext, camera);
             }
         });
     }
@@ -93,5 +88,23 @@ public abstract class GameObject {
 
     private void updateHitboxe(){
         hitBoxe = new Rectangle2D(position.getX(), position.getY(), size.getX(), size.getY());
+    }
+
+    private static void handleInputs(){
+        if (Input.isPressed(KeyCode.D) && !Input.wasPressed(KeyCode.D)){
+            isDebugStateActive = !isDebugStateActive;
+        }
+
+        if (Input.isPressed(KeyCode.Q) && !Input.wasPressed(KeyCode.Q)){
+            Journal.addJournal(10);
+        }
+
+        if (Input.isPressed(KeyCode.P) && !Input.wasPressed(KeyCode.P)){
+            imgIndex = -imgIndex + 1;
+        }
+
+        if (Input.isPressed(KeyCode.K) && !Input.wasPressed(KeyCode.K)){
+            Journal.emptyJournals();
+        }
     }
 }

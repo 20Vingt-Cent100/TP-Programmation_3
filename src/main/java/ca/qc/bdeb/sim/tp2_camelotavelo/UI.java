@@ -7,18 +7,23 @@ import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
-import java.util.List;
-
 public class UI extends GameObject{
-    public static int journauxInventaire = 0;
     public static double argent = 0;
-    public static List<Maison> maisons;
 
-    public final Image[] iconeMaison =  {new Image(getClass().getResourceAsStream("/assets/icone-maison.png")),
+    public final Image[] iconeMaison =  {
+            new Image(getClass().getResourceAsStream("/assets/icone-maison.png")),
+            new Image(getClass().getResourceAsStream("/assets/HouseIcon.png"))
+
     };
-    public final Image[] iconeJournal =  {new Image(getClass().getResourceAsStream("/assets/icone-journal.png")),
+
+    public final Image[] iconeJournal =  {
+            new Image(getClass().getResourceAsStream("/assets/icone-journal.png")),
+            new Image(getClass().getResourceAsStream("/assets/JournalIcon.png"))
     };
-    public final Image [] iconeDollar =  {new Image(getClass().getResourceAsStream("/assets/icone-dollar.png")),
+
+    public final Image [] iconeDollar =  {
+            new Image(getClass().getResourceAsStream("/assets/icone-dollar.png")),
+            new Image(getClass().getResourceAsStream("/assets/MoneyIcon.png"))
     };
 
     public UI(double posX, double posY, double width, double height) {
@@ -35,7 +40,7 @@ public class UI extends GameObject{
                 graphicsContext.getCanvas().getHeight() - position.getY(),
                 size.getX(),
                 size.getY());
-        //tetx
+        //text
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.setFont(Font.font(16));
         graphicsContext.setTextAlign(TextAlignment.LEFT);
@@ -45,15 +50,15 @@ public class UI extends GameObject{
         double milieuY = size.getY() / 2.0;
 
         if (iconeJournal[0] != null) {
-            graphicsContext.drawImage(iconeJournal[0], separationx, milieuY - 12, 24, 24);
+            graphicsContext.drawImage(iconeJournal[GameObject.imgIndex], separationx, milieuY - 12, 24, 24);
             separationx += 40;
         }
-        graphicsContext.fillText(" " + journauxInventaire, separationx, milieuY);
+        graphicsContext.fillText(" " + Journal.getJournalCount(), separationx, milieuY);
         separationx += 90;
 
 
         if (iconeDollar[0] != null) {
-            graphicsContext.drawImage(iconeDollar[0], separationx, milieuY - 12, 24, 24);
+            graphicsContext.drawImage(iconeDollar[GameObject.imgIndex], separationx, milieuY - 12, 24, 24);
             separationx += 38;
         }
         graphicsContext.fillText(String.format("%.0f $", argent), separationx, milieuY);
@@ -61,17 +66,19 @@ public class UI extends GameObject{
 
 
         if (iconeMaison[0] != null) {
-            graphicsContext.drawImage(iconeMaison[0], separationx, milieuY - 12, 24, 24);
+            graphicsContext.drawImage(iconeMaison[GameObject.imgIndex], separationx, milieuY - 12, 24, 24);
             separationx += 150;
         }
+
+        var maisons = Maison.getListeMaison();
 
         if (maisons != null) {
             StringBuilder stringBuilder = new StringBuilder();
             boolean premiermaison = true;
-            for (Maison maison : maisons) {
-                if (maison.estAbonnee()) {
+            for (Maison m : maisons) {
+                if (m.estAbonnee()) {
                     if (!premiermaison) stringBuilder.append(", ");
-                    stringBuilder.append((int) maison.getAdresse());
+                    stringBuilder.append((int) m.getAdresse());
                     premiermaison = false;
                 }
             }

@@ -19,6 +19,8 @@ public class Maison extends GameObject {
  private final BoiteAuxLettres boite;
  private final List<Fenetre> fenetres;
 
+ private static final ArrayList<Maison> LISTE_MAISON = new ArrayList<>();
+
  public Maison(double posX, double posY, int adresse, boolean abonnee, BoiteAuxLettres boite, List<Fenetre> fenetres) {
     super(posX, posY ,largeur, hauteur);
      this.adresse = adresse;
@@ -27,8 +29,7 @@ public class Maison extends GameObject {
      this.fenetres = fenetres;
  }
 
- public static List<Maison> genererMaisons (int nbMaisons, double hauteurFenetreJeu , double posY, Random random){
-     List<Maison> maisons = new ArrayList<>();
+ public static void genererMaisons (int nbMaisons, double hauteurFenetreJeu , double posY, Random random){
      int adresseInitiale = 100 + random.nextInt(851);
      for (int i = 0; i < nbMaisons; i++) {
          double baseX = 1300.0 * (i + 1);
@@ -46,11 +47,8 @@ public class Maison extends GameObject {
          if (nbFenetres == 2) {
              fenetres.add(new Fenetre(baseX + 600, yFenetre, abonnee));
          }
-         Maison maison = new Maison(baseX, posY, adresse, abonnee, boite, fenetres);
-         maisons.add(maison);
+         LISTE_MAISON.add(new Maison(baseX, posY, adresse, abonnee, boite, fenetres));
      }
-
-   return maisons;
  }
 
 
@@ -96,5 +94,9 @@ public class Maison extends GameObject {
         gc.fillText(Integer.toString(adresse),
                 positionX + largeurPorte / 2.0,
                 positionY + 10);
+    }
+
+    public static ArrayList<Maison> getListeMaison() {
+        return LISTE_MAISON;
     }
 }
