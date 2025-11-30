@@ -19,7 +19,8 @@ Mais, **Attention, si vous casser une fenêtre et que la maison est présente da
 
 ## Commandes
 
-$\rightarrow$ pour accélerer
-$\leftarrow$ pour ralentir.
+```$\rightarrow$``` pour accélerer
+
+```$\leftarrow$``` pour ralentir
 
 
