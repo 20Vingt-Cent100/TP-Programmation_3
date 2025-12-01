@@ -1,7 +1,6 @@
 package ca.qc.bdeb.sim.tp2_camelotavelo;
 
-import javafx.geometry.Rectangle2D;
-
+//Interface pour les objets capables de détecter et réagir aux collisions.
 public interface Collidable {
     void isColliding(GameObject other);
 }
