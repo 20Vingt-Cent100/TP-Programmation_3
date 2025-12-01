@@ -4,6 +4,7 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -34,7 +35,9 @@ public class App extends Application {
 
         root.getChildren().add(APP_CANVAS);
 
+        appStageContext.setResizable(false);
         appStageContext.setTitle("Camelot");
+        appStageContext.getIcons().add(new Image(getClass().getResourceAsStream("/assets/journal.png")));
         appStageContext.setScene(defaultScene);
         appStageContext.show();
 

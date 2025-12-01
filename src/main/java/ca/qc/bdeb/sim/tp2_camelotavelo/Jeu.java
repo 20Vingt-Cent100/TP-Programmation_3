@@ -197,7 +197,7 @@ public class Jeu {
     }
 
     public void checkGameOver(){
-        if (Journal.getJournalCount() < 1 || Journal.getJournauxActif() == 0) {
+        if (Journal.getJournalCount() < 1 && Journal.getJournauxActif() == 0) {
             etat = EtatJeu.FINI;
             tempsEtat = 0;
         }
