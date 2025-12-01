@@ -9,6 +9,7 @@ import javafx.scene.text.TextAlignment;
 
 public class UI extends GameObject{
     public static double argent = 0;
+    private static String addressStr;
 
     public final Image[] iconeMaison =  {
             new Image(getClass().getResourceAsStream("/assets/icone-maison.png")),
@@ -28,6 +29,7 @@ public class UI extends GameObject{
 
     public UI(double posX, double posY, double width, double height) {
         super(posX, posY, width, height);
+        addressStr = loadAddressStr();
     }
 
     @Override
@@ -70,6 +72,11 @@ public class UI extends GameObject{
             separationx += 150;
         }
 
+
+            graphicsContext.fillText(addressStr, separationx, milieuY);
+        }
+
+    private String loadAddressStr() {
         var maisons = Maison.getListeMaison();
 
         if (maisons != null) {
@@ -82,8 +89,9 @@ public class UI extends GameObject{
                     premiermaison = false;
                 }
             }
-            graphicsContext.fillText(stringBuilder.toString(), separationx, milieuY);
-        }
 
+            return stringBuilder.toString();
+        }
+        return "";
     }
 }
