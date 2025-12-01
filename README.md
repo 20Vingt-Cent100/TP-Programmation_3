@@ -11,6 +11,7 @@ Deux types d'objets sont intéractibles, les boîtes aux lettres et les fênetre
 
 ### Boîtes aux lettres
 ![Boite aux lettres](src/main/resources/assets/boite-aux-lettres.png)
+
 Lorsque vous distribuer un journal dans la boîte au lettre d'une maison abonné, votre patron vous verse une commition. Par contre rien ne vous est reversé si vous en remettez un à une maison non abonnée.
 **Gare à votre nombre de journaux, ceux-ci sont limités...**
 
