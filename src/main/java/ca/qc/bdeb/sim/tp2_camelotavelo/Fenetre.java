@@ -1,19 +1,17 @@
 package ca.qc.bdeb.sim.tp2_camelotavelo;
 
-import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 public class Fenetre extends GameObject implements Collidable, Debuggable {
-    private static final double largeur = 159;
-    private static final double hauteur = 130;
-
+   //Attributs
+    private static final double LARGEUR = 159;
+    private static final double HAUTEUR = 130;
     private final boolean abonnee;
     private boolean brisee;
     private Boolean bonneCasse;
-
+    // Images Fênetre
     private final Image [][] SPRITES = {
             {new Image(getClass().getResourceAsStream("/assets/fenetre.png")),
                     new Image(getClass().getResourceAsStream("/assets/fenetre-brisee-vert.png")),
@@ -22,14 +20,23 @@ public class Fenetre extends GameObject implements Collidable, Debuggable {
             {new Image(getClass().getResourceAsStream("/assets/Window.png"))}
     };
 
-
+    /**
+     * Constructeur
+     * @param posX position X dans le monde
+     * @param posY position Y dans le monde
+     * @param abonnee indique si la maison est abonnée au journal
+     */
     public Fenetre( double posX , double posY, boolean abonnee) {
-   super(posX,posY, largeur, hauteur);
+   super(posX,posY, LARGEUR, HAUTEUR);
         this.abonnee = abonnee;
         this.brisee = false;
         this.bonneCasse = null;
     }
 
+    /**
+     * Réaction à une collision.
+     * Si un journal touche la fenêtre, elle se casse et augmente ou diminue l'argent.
+     */
     @Override
     public void isColliding(GameObject other) {
         if (other instanceof Journal && !brisee){
@@ -46,9 +53,9 @@ public class Fenetre extends GameObject implements Collidable, Debuggable {
 
     @Override
     protected void update(){
-
     }
 
+    //Dessine la fenêtre dans l'écran selon son état.
     @Override
     public void draw(GraphicsContext gc, Camera camera) {
 
@@ -74,7 +81,7 @@ public class Fenetre extends GameObject implements Collidable, Debuggable {
                 gc.getCanvas().getHeight() -(size.getY()+position.getY())
         );
     }
-
+    //Dessine la hitbox de la fenêtre lorsque le mode debug est actif
     @Override
     public void drawDebugState(GraphicsContext gc, Camera camera) {
         gc.setStroke(Color.YELLOW);
