@@ -37,7 +37,7 @@ public class Maison extends GameObject {
 
          List<Fenetre> fenetres = new ArrayList<>();
          int nbFenetres = random.nextInt(3); // 0,1,2
-         double yFenetre = 300;
+         double yFenetre = App.HEIGHT - (50 + Fenetre.getHAUTEUR());
          if (nbFenetres >= 1) {
              fenetres.add(new Fenetre(baseX + 300, yFenetre, abonnee));
          }

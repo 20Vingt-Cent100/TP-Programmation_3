@@ -91,4 +91,8 @@ public class Fenetre extends GameObject implements Collidable, Debuggable {
                 hitBoxe.getHeight()
         );
     }
+
+    public static double getHAUTEUR() {
+        return HAUTEUR;
+    }
 }
