@@ -123,7 +123,7 @@ public class Camelot extends GameObject implements Gravity{
         //vers le haut
         if(Input.isPressed(KeyCode.X) && timer - throwTime > 0.5) {
             new Journal(position.getX() + size.getX() / 2.,
-                    position.getY() + size.getY(),
+                    position.getY() + size.getY()/2,
                     52, 31, speed,
                     new Point2D(150, 1100).multiply(speedThrowFactor));
 
@@ -132,7 +132,7 @@ public class Camelot extends GameObject implements Gravity{
         // à la longeur
         if(Input.isPressed(KeyCode.Z) && timer - throwTime > 0.5) {
             new Journal(position.getX() + size.getX() / 2.,
-                    position.getY() + size.getY(),
+                    position.getY() + size.getY()/2,
                     52, 31, speed,
                     new Point2D(900, 900).multiply(speedThrowFactor));
 
