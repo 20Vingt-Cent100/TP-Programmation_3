@@ -7,8 +7,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 public class Fenetre extends GameObject implements Collidable, Debuggable {
-    public static final double largeur = 159;
-    public static final double hauteur = 130;
+    private static final double largeur = 159;
+    private static final double hauteur = 130;
 
     private final boolean abonnee;
     private boolean brisee;

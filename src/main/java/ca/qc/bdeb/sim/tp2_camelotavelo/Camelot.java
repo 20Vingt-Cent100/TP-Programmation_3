@@ -80,6 +80,10 @@ public class Camelot extends GameObject implements Gravity{
         }
     }
 
+    public Point2D getPosition() {
+        return position;
+    }
+
     private void handleInput(){
         if(Input.isPressed(KeyCode.RIGHT)) {
             acceleration = new Point2D(300, acceleration.getY());

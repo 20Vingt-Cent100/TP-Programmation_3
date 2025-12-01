@@ -15,6 +15,7 @@ public class Maison extends GameObject {
  private final boolean abonnee;
  private static final double largeur=120;
  private static final double hauteur =220;
+ private final double baseX;
 
  private final BoiteAuxLettres boite;
  private final List<Fenetre> fenetres;
@@ -27,9 +28,10 @@ public class Maison extends GameObject {
      this.abonnee = abonnee;
      this.boite = boite;
      this.fenetres = fenetres;
+     this.baseX = posX;
  }
 
- public static void genererMaisons (int nbMaisons, double hauteurFenetreJeu , double posY, Random random){
+ public static ArrayList<Maison> genererMaisons (int nbMaisons, double hauteurFenetreJeu , double posY, Random random){
      int adresseInitiale = 100 + random.nextInt(851);
      for (int i = 0; i < nbMaisons; i++) {
          double baseX = 1300.0 * (i + 1);
@@ -49,7 +51,7 @@ public class Maison extends GameObject {
          }
          LISTE_MAISON.add(new Maison(baseX, posY, adresse, abonnee, boite, fenetres));
      }
- }
+ return LISTE_MAISON;}
 
 
 
@@ -59,6 +61,7 @@ public class Maison extends GameObject {
  public boolean estAbonnee() {
      return abonnee;
  }
+ public double getBaseX() {return baseX;}
  public BoiteAuxLettres getBoite() {
      return boite;
  }
