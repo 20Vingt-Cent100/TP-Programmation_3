@@ -85,7 +85,6 @@ public class Jeu {
 
     public void update(double dt) {
         tempsEtat += dt;
-
         switch (etat) {
             case CHARGEMENT -> {
                 if (tempsEtat >= 3.0) {
@@ -117,7 +116,6 @@ public class Jeu {
             initialiserNiveau();
             return;
         }
-
         // Fin de partie  (plus de journaux en inventaire ET plus aucun journal à l'écran)
         if (Journal.getJournalCount() <= 0 && !Journal.journalsActive()) {
             etat = EtatJeu.FINI;
