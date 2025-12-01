@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
+import java.util.Objects;
 
 public class Wall extends GameObject{
     private final Image[] img = {new Image(getClass().getResourceAsStream("/assets/brique.png")),
