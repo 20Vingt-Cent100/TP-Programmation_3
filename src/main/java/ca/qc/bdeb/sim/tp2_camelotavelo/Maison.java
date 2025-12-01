@@ -19,6 +19,15 @@ public class Maison extends GameObject {
 
     private static final ArrayList<Maison> LISTE_MAISON = new ArrayList<>();
 
+    /**
+     * Construceur de maison
+     * @param posX position en x
+     * @param posY position en y
+     * @param adresse Numéro de l'adresse
+     * @param abonnee Valeur de si la maison est abonné ou non
+     * @param boite Liste de boîtes aux lettre associé à la maison
+     * @param fenetres Liste de fenêtres associé à la maison
+     */
  public Maison(double posX, double posY, int adresse, boolean abonnee, BoiteAuxLettres boite, List<Fenetre> fenetres) {
     super(posX, posY ,largeur, hauteur);
      this.adresse = adresse;
@@ -26,6 +35,14 @@ public class Maison extends GameObject {
      this.baseX = posX;
  }
 
+    /**
+     *Génère des maisons avec leurs fenêtres et leurs boîtes aux lettres associés
+     * @param nbMaisons Nombre de maisons à générer
+     * @param hauteurFenetreJeu
+     * @param posY  Position en Y de la maison (0 en haut)
+     * @param random Random qui génèrera les adresses et autres
+     * @return la liste de maison générées
+     */
  public static ArrayList<Maison> genererMaisons (int nbMaisons, double hauteurFenetreJeu , double posY, Random random){
      int adresseInitiale = 100 + random.nextInt(851);
      for (int i = 0; i < nbMaisons; i++) {
@@ -65,6 +82,8 @@ public class Maison extends GameObject {
 
     @Override
     public void draw(GraphicsContext gc, Camera camera) {
+
+        //Affichage de la porte et de son pied d'estale
         double positionX = position.getX() - camera.getX();
         double positionY = position.getY();
         double largeurPorte = size.getX();
@@ -73,12 +92,16 @@ public class Maison extends GameObject {
         gc.fillRect(positionX - 5, positionY + hauteurPorte, largeurPorte + 10, 10);
         gc.setFill(Color.rgb(119, 60, 5));
         gc.fillRect(positionX, positionY, largeurPorte, hauteurPorte);
+
+        //Affichage de la poignée
         double rayonPoignee = 12;
         double poigneeX = positionX + largeurPorte * 0.22;
         double poigneeY = positionY + hauteurPorte * 0.45;
         gc.setFill(Color.rgb(246, 135, 14));
         gc.fillOval(poigneeX - rayonPoignee, poigneeY - rayonPoignee,
                 rayonPoignee * 2, rayonPoignee * 2);
+
+        //Affichage de l'adresse
         gc.setFill(Color.YELLOW);
         gc.setFont(Font.font(36));
         gc.setTextAlign(TextAlignment.CENTER);
