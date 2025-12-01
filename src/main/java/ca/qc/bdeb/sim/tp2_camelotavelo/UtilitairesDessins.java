@@ -16,7 +16,7 @@ public class UtilitairesDessins {
      * Dessine le vecteur fourni à partir d'un certain point sur l'écran.
      * <p>
      * Si le vecteur a un module de plus de 80, une longueur maximale de 80 est utilisée
-     * (question d'éviter d'afficher des vecteurs inutilement trop gros sur toute la largeur de l'écran)
+     * (question d'éviter d'afficher des vecteurs inutilement trop gros sur toute la LARGEUR de l'écran)
      *
      * @param origineEcran Point de départ du vecteur (en pixels, sur l'écran)
      * @param vecteur      Vecteur à dessiner avec une flèche
