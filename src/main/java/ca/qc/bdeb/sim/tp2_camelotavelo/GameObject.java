@@ -33,9 +33,6 @@ public abstract class GameObject {
     }
 
     public static void updateAll(){
-
-        handleInputs();
-
         GAME_OBJECT_ARRAY_LIST.addAll(TEMP_ADD_LIST);
         TEMP_ADD_LIST.clear();
 
@@ -105,28 +102,10 @@ public abstract class GameObject {
         hitBoxe = new Rectangle2D(position.getX(), position.getY(), size.getX(), size.getY());
     }
 
-    private static void handleInputs(){
-        if (Input.isPressed(KeyCode.D) && !Input.wasPressed(KeyCode.D)){
-            isDebugStateActive = !isDebugStateActive;
-        }
-
-        if (Input.isPressed(KeyCode.Q) && !Input.wasPressed(KeyCode.Q)){
-            Journal.addJournal(10);
-        }
-
-        if (Input.isPressed(KeyCode.P) && !Input.wasPressed(KeyCode.P)){
-            imgIndex = -imgIndex + 1;
-        }
-
-        if (Input.isPressed(KeyCode.K) && !Input.wasPressed(KeyCode.K)){
-            Journal.emptyJournals();
-        }
-        if (Input.isPressed(KeyCode.F) && !Input.wasPressed(KeyCode.F)) {
-            etatDebugChamp = !etatDebugChamp;
-        }
-        if (Input.isPressed(KeyCode.I) && !Input.wasPressed(KeyCode.I)) {
-            ParticuleChargee.testParticles();
-        }
+    public static void switchDebugState(){
+        isDebugStateActive = !isDebugStateActive;
     }
-    // TODO: Faire le debbuagge des particules ca marche pas et debegage des nivaux TOUCHE I, L , F
+    public static void switchDebugParticleState(){
+        etatDebugChamp = !etatDebugChamp;
+    }
 }

@@ -4,6 +4,7 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -37,7 +38,12 @@ public class App extends Application {
         appStageContext.setScene(defaultScene);
         appStageContext.show();
 
-        appStageContext.getScene().setOnKeyPressed((k) -> Input.addKey(k.getCode()));
+        appStageContext.getScene().setOnKeyPressed((k) ->
+        {
+            Input.addKey(k.getCode());
+            if(k.getCode() == KeyCode.ESCAPE)
+                appStageContext.close();
+        });
         appStageContext.getScene().setOnKeyReleased((k) -> Input.removeKey(k.getCode()));
     }
 
@@ -67,9 +73,5 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
-    }
-
-    public static void changeScene(Scene gameScene){
-        appStageContext.setScene(gameScene);
     }
 }

@@ -1,6 +1,7 @@
 package ca.qc.bdeb.sim.tp2_camelotavelo;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -104,11 +105,12 @@ public class Jeu {
     }
 
     private void updateEnCours() {
+        handleInputs();
         GameObject.updateAll();
         GameObject.checkCollision();
 
         // Fin de niveau
-        if (camelot.getPosition().getX() > positionFinNiveau) {
+        if (camelot.position.getX() > positionFinNiveau) {
             niveau++;
             etat = EtatJeu.CHARGEMENT;
             tempsEtat = 0;
@@ -167,4 +169,29 @@ public class Jeu {
         gc.fillText(String.format("Argent total : %.0f $", UI.argent),
                 App.WIDTH / 2.0, App.HEIGHT / 2.0 + 20);
     }
+
+    private static void handleInputs(){
+        if (Input.isPressed(KeyCode.D) && !Input.wasPressed(KeyCode.D)){
+            GameObject.switchDebugState();
+        }
+
+        if (Input.isPressed(KeyCode.Q) && !Input.wasPressed(KeyCode.Q)){
+            Journal.addJournal(10);
+        }
+
+        if (Input.isPressed(KeyCode.P) && !Input.wasPressed(KeyCode.P)){
+           GameObject.imgIndex = -GameObject.imgIndex + 1;
+        }
+
+        if (Input.isPressed(KeyCode.K) && !Input.wasPressed(KeyCode.K)){
+            Journal.emptyJournals();
+        }
+        if (Input.isPressed(KeyCode.F) && !Input.wasPressed(KeyCode.F)) {
+            GameObject.switchDebugParticleState();
+        }
+        if (Input.isPressed(KeyCode.I) && !Input.wasPressed(KeyCode.I)) {
+            ParticuleChargee.testParticles();
+        }
+    }
+    // TODO: Faire le debbuagge des particules ca marche pas et debegage des nivaux TOUCHE I, L , F
 }
