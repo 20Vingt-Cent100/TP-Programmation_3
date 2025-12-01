@@ -65,6 +65,11 @@ public class ParticuleChargee extends GameObject {
 
     public static void clearAll() {
         PARTICULES.clear();
+        for (GameObject obj : new ArrayList<>(GameObject.getGameObjects())) {
+            if (obj instanceof ParticuleChargee) {
+                obj.delete();
+            }
+        }
     }
 
     public static void setNiveauWidth(double width) {
@@ -82,7 +87,7 @@ public class ParticuleChargee extends GameObject {
     }
 
     public static void testParticules() {
-        PARTICULES.clear();
+        clearAll();
         double marge = 10;
         double yBas  = RAYON + marge;                  // ligne du bas
         double yHaut = App.HEIGHT - (RAYON + marge);   // ligne du haut
