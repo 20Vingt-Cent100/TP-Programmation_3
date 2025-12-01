@@ -17,17 +17,12 @@ public class Maison extends GameObject {
  private static final double hauteur =220;
  private final double baseX;
 
- private final BoiteAuxLettres boite;
- private final List<Fenetre> fenetres;
-
- private static final ArrayList<Maison> LISTE_MAISON = new ArrayList<>();
+    private static final ArrayList<Maison> LISTE_MAISON = new ArrayList<>();
 
  public Maison(double posX, double posY, int adresse, boolean abonnee, BoiteAuxLettres boite, List<Fenetre> fenetres) {
     super(posX, posY ,largeur, hauteur);
      this.adresse = adresse;
      this.abonnee = abonnee;
-     this.boite = boite;
-     this.fenetres = fenetres;
      this.baseX = posX;
  }
 
@@ -62,12 +57,6 @@ public class Maison extends GameObject {
      return abonnee;
  }
  public double getBaseX() {return baseX;}
- public BoiteAuxLettres getBoite() {
-     return boite;
- }
- public List<Fenetre> getFenetres() {
-     return fenetres;
- }
 
  @Override
  protected void update(){
