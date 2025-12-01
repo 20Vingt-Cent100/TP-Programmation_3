@@ -61,6 +61,14 @@ public class Jeu {
         // Génération des maisons
         maisons = Maison.genererMaisons(12, App.HEIGHT, 350, random);
 
+        // Particules chargées à partir du niveau 2
+        if (niveau >= 2) {
+            int nbPart = Math.min((niveau - 1) * 30, 400);
+            ParticuleChargee.generParticlesRandom(nbPart, positionFinNiveau, App.HEIGHT, random);
+        } else {
+            ParticuleChargee.clearAll();
+        }
+
         // Camelot
         double solY = 0; // dans ton jeu, y=0 est le sol
         camelot = new Camelot(0, solY, 172, 144);
@@ -80,14 +88,6 @@ public class Jeu {
             ParticuleChargee.setNiveauWidth(positionFinNiveau);
         } else {
             positionFinNiveau = 3 * App.WIDTH;
-        }
-
-        // Particules chargées à partir du niveau 2
-        if (niveau >= 2) {
-            int nbPart = Math.min((niveau - 1) * 30, 400);
-            ParticuleChargee.generParticlesRandom(nbPart, positionFinNiveau, App.HEIGHT, random);
-        } else {
-            ParticuleChargee.clearAll();
         }
     }
     /**
