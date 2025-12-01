@@ -25,5 +25,20 @@ Mais, **Attention, si vous casser une fenêtre et que la maison est présente da
 
 ```↑``` ou ```espace``` pour sauter
 
+```X``` pour lancer un journal vers l'avant
+
+```Z``` pour lancer un journal vers le haut
+
+```shift``` pour augmenter la force du lancé de journal
+
+
+## Commandes autres
+
+```Q``` permet de se rajouter 10 journaux
+
+```D``` permet de passer en mode débuggage et d'affcher les hitboxes
+
+
+
 
 
