@@ -36,7 +36,7 @@ public class App extends Application {
         root.getChildren().add(APP_CANVAS);
 
         appStageContext.setResizable(false);
-        appStageContext.setTitle("Camelot");
+        appStageContext.setTitle("Camelot à vélo");
         appStageContext.getIcons().add(new Image(getClass().getResourceAsStream("/assets/journal.png")));
         appStageContext.setScene(defaultScene);
         appStageContext.show();
