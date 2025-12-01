@@ -168,7 +168,7 @@ public class Jeu {
                 App.WIDTH / 2.0, App.HEIGHT / 2.0 + 20);
     }
 
-    private static void handleInputs(){
+    private void handleInputs(){
         if (Input.isPressed(KeyCode.D) && !Input.wasPressed(KeyCode.D)){
             GameObject.switchDebugState();
         }
@@ -188,8 +188,14 @@ public class Jeu {
             GameObject.switchDebugParticleState();
         }
         if (Input.isPressed(KeyCode.I) && !Input.wasPressed(KeyCode.I)) {
-            ParticuleChargee.testParticles();
+            ParticuleChargee.testParticules();
+        }
+        if (Input.isPressed(KeyCode.L) && !Input.wasPressed(KeyCode.L)) {
+         niveau++;
+         etat = EtatJeu.CHARGEMENT;
+         tempsEtat = 0;
+         initialiserNiveau();
+         return;
         }
     }
-    // TODO: Faire le debbuagge des particules ca marche pas et debegage des nivaux TOUCHE I, L , F
 }

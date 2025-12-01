@@ -81,8 +81,7 @@ public class ParticuleChargee extends GameObject {
         }
     }
 
-    // TODO: changer ca ca marche oas
-    public static void testParticles() {
+    public static void testParticules() {
         PARTICULES.clear();
         double marge = 10;
         double yBas  = RAYON + marge;                  // ligne du bas
