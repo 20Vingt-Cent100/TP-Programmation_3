@@ -12,6 +12,8 @@ public class Journal extends GameObject implements Gravity, Collidable, Debuggab
     private static float mass;
     private static final double Charge = 900.0;
 
+    private static int journauxActif;
+
     private Image sprite = new Image(getClass().getResourceAsStream("/assets/journal.png"));
 
     private Point2D acceleration;
@@ -23,7 +25,7 @@ public class Journal extends GameObject implements Gravity, Collidable, Debuggab
         if (journalCount <= 0) {
             this.delete();
         }else {
-
+            journauxActif++;
             journalCount--;
             this.acceleration = new Point2D(0, 0);
             this.speed = speed.add(initialMomentum.multiply(1 / mass));
@@ -41,8 +43,9 @@ public class Journal extends GameObject implements Gravity, Collidable, Debuggab
         Point2D aChamp = champ.multiply(Charge / mass);
         speed = speed.add(aChamp.multiply(Time.deltaTimeSec));
 
-        if (position.getY() < 0)
+        if (position.getY() < 0) {
             this.delete();
+        }
 
     }
 
@@ -73,12 +76,8 @@ public class Journal extends GameObject implements Gravity, Collidable, Debuggab
     public static int getJournalCount() {
         return journalCount;
     }
-
-    public static boolean journalsActive() {
-        for (GameObject g : GameObject.getGameObjects()) {
-            if (g instanceof Journal) return true;
-        }
-        return false;
+    public static int getJournauxActif() {
+        return journauxActif;
     }
 
     public static void emptyJournals(){
@@ -93,5 +92,11 @@ public class Journal extends GameObject implements Gravity, Collidable, Debuggab
                 hitBoxe.getWidth(),
                 hitBoxe.getHeight()
         );
+    }
+
+    @Override
+    protected void delete() {
+        super.delete();
+        journauxActif--;
     }
 }

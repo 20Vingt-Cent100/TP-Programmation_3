@@ -117,10 +117,7 @@ public class Jeu {
             return;
         }
         // Fin de partie  (plus de journaux en inventaire ET plus aucun journal à l'écran)
-        if (Journal.getJournalCount() <= 0 && !Journal.journalsActive()) {
-            etat = EtatJeu.FINI;
-            tempsEtat = 0;
-        }
+        checkGameOver();
     }
 
     public void draw(GraphicsContext gc) {
@@ -196,6 +193,13 @@ public class Jeu {
          tempsEtat = 0;
          initialiserNiveau();
          return;
+        }
+    }
+
+    public void checkGameOver(){
+        if (Journal.getJournalCount() < 1 || Journal.getJournauxActif() == 0) {
+            etat = EtatJeu.FINI;
+            tempsEtat = 0;
         }
     }
 }
