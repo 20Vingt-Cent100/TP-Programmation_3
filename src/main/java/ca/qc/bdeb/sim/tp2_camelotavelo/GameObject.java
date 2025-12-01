@@ -71,7 +71,9 @@ public abstract class GameObject {
     }
 
     public static void drawAll(GraphicsContext graphicsContext, Camera camera){
-        camera.updateFov();
+        if(camera !=null)
+            camera.updateFov();
+
         GAME_OBJECT_ARRAY_LIST.forEach(object -> {
             object.draw(graphicsContext, camera);
 
@@ -107,4 +109,5 @@ public abstract class GameObject {
             Journal.emptyJournals();
         }
     }
+    public static void clearAllObjects(){GAME_OBJECT_ARRAY_LIST.forEach(GameObject::delete);}
 }

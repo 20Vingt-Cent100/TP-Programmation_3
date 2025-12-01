@@ -32,7 +32,7 @@ public class Fenetre extends GameObject implements Collidable, Debuggable {
 
     @Override
     public void isColliding(GameObject other) {
-        if (other instanceof Journal){
+        if (other instanceof Journal && !brisee){
             brisee = true;
             if (abonnee) {
                 bonneCasse = false;
@@ -42,14 +42,6 @@ public class Fenetre extends GameObject implements Collidable, Debuggable {
                 UI.argent += 2;
             }
         }
-    }
-
-    public boolean bonneCasse() {return bonneCasse;}
-    public boolean estBrisee() {
-        return brisee;
-    }
-    public boolean estAbonnee() {
-        return abonnee;
     }
 
     @Override

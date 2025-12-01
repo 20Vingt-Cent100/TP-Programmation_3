@@ -29,27 +29,17 @@ public class BoiteAuxLettres extends GameObject implements Collidable, Debuggabl
 
     @Override
     public void isColliding(GameObject other) {
-        if (!(other instanceof Journal)) return;
-        if (touchee) return;
-        touchee = true;
-        if (abonnee) {
-            livraisonBonne = true;
-            UI.argent += 1;
-        } else {
-            livraisonBonne = false;
+        if (other instanceof Journal && !touchee){
+
+            touchee = true;
+
+            if (abonnee) {
+                livraisonBonne = true;
+                UI.argent += 1;
+            } else {
+                livraisonBonne = false;
+            }
         }
-    }
-
-    public boolean estAbonnee() {
-        return abonnee;
-    }
-
-    public boolean estTouchee() {
-        return touchee;
-    }
-
-    public Boolean livraisonBonne() {
-        return livraisonBonne;
     }
 
 

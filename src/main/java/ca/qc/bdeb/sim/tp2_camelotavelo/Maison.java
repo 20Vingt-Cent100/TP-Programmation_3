@@ -7,7 +7,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class Maison extends GameObject {
@@ -17,11 +16,13 @@ public class Maison extends GameObject {
  private static final double hauteur =220;
 
  private final BoiteAuxLettres boite;
- private final List<Fenetre> fenetres;
+ private final Fenetre[] fenetres;
 
  private static final ArrayList<Maison> LISTE_MAISON = new ArrayList<>();
 
- public Maison(double posX, double posY, int adresse, boolean abonnee, BoiteAuxLettres boite, List<Fenetre> fenetres) {
+ public static double coordoneDerniereMaison;
+
+ public Maison(double posX, double posY, int adresse, boolean abonnee, BoiteAuxLettres boite, Fenetre[] fenetres) {
     super(posX, posY ,largeur, hauteur);
      this.adresse = adresse;
      this.abonnee = abonnee;
@@ -29,26 +30,34 @@ public class Maison extends GameObject {
      this.fenetres = fenetres;
  }
 
- public static void genererMaisons (int nbMaisons, double hauteurFenetreJeu , double posY, Random random){
-     int adresseInitiale = 100 + random.nextInt(851);
+ public static void genererMaisons (int nbMaisons){
+     Random random = new Random();
+
+     LISTE_MAISON.clear();
+
+     int adresseInitiale = random.nextInt(100, 951);
+
      for (int i = 0; i < nbMaisons; i++) {
          double baseX = 1300.0 * (i + 1);
          int adresse = adresseInitiale + 2 * i;
-         boolean abonnee = random.nextBoolean();
-         double yBoite = hauteurFenetreJeu * (0.2 + 0.5 * random.nextDouble());
-         BoiteAuxLettres boite = new BoiteAuxLettres(baseX + 200, yBoite, abonnee);
 
-         List<Fenetre> fenetres = new ArrayList<>();
-         int nbFenetres = random.nextInt(3); // 0,1,2
-         double yFenetre = 300;
-         if (nbFenetres >= 1) {
-             fenetres.add(new Fenetre(baseX + 300, yFenetre, abonnee));
+         boolean abonnee = random.nextBoolean();
+
+         //Génération des boîtes aux lettres
+         double yBoite = random.nextDouble(0.20 * App.HEIGHT, 0.7* App.HEIGHT);
+         BoiteAuxLettres boites = new BoiteAuxLettres(baseX + 200, App.HEIGHT - yBoite, abonnee);
+
+         //Génération des fenêtres
+         Fenetre[] fenetres = new Fenetre[random.nextInt(3)];
+
+         for (int j = 0; j < fenetres.length; j++){
+            fenetres[j] = new Fenetre(baseX + 300 * j, App.HEIGHT - 50 - Fenetre.hauteur, abonnee);
          }
-         if (nbFenetres == 2) {
-             fenetres.add(new Fenetre(baseX + 600, yFenetre, abonnee));
-         }
-         LISTE_MAISON.add(new Maison(baseX, posY, adresse, abonnee, boite, fenetres));
+
+         LISTE_MAISON.add(new Maison(baseX, 0, adresse, abonnee, boites, fenetres));
      }
+
+     coordoneDerniereMaison = LISTE_MAISON.getLast().position.getX();
  }
 
 
@@ -59,12 +68,6 @@ public class Maison extends GameObject {
  public boolean estAbonnee() {
      return abonnee;
  }
- public BoiteAuxLettres getBoite() {
-     return boite;
- }
- public List<Fenetre> getFenetres() {
-     return fenetres;
- }
 
  @Override
  protected void update(){
@@ -74,7 +77,8 @@ public class Maison extends GameObject {
     @Override
     public void draw(GraphicsContext gc, Camera camera) {
         double positionX = position.getX() - camera.getX();
-        double positionY = position.getY();
+        double positionY = App.HEIGHT - (position.getY() + size.getY());
+
         double largeurPorte = size.getX();
         double hauteurPorte = size.getY();
         gc.setFill(Color.rgb(119, 60, 5));

@@ -22,6 +22,7 @@ public class Journal extends GameObject implements Gravity, Collidable, Debuggab
 
         if (journalCount <= 0) {
             this.delete();
+            Level.gameOver();
         }else {
 
             journalCount--;
@@ -34,6 +35,9 @@ public class Journal extends GameObject implements Gravity, Collidable, Debuggab
     protected void update() {
         position = position.add(speed.multiply(Time.deltaTimeSec));
         speed = speed.add(acceleration.multiply(Time.deltaTimeSec));
+
+        if(speed.magnitude() >  1500)
+            speed = speed.multiply(1500 / speed.magnitude());
 
         if (position.getY() < 0)
             this.delete();

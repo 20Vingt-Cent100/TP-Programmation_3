@@ -55,6 +55,9 @@ public class Camelot extends GameObject implements Gravity{
         speed = new Point2D(Math.max(Math.min(speed.getX(), 600.), 200), speed.getY());
 
         handleInput();
+
+        if(position.getX() >= Maison.coordoneDerniereMaison + 1.5 * App.WIDTH)
+            Level.levelFinished();
     }
 
     @Override
@@ -62,7 +65,7 @@ public class Camelot extends GameObject implements Gravity{
         graphicsContext.drawImage(
                 SPRITES[GameObject.imgIndex][(int) (Math.floor(timer * 4) % SPRITES[GameObject.imgIndex].length)],
                 position.getX() - camera.getX(),
-                graphicsContext.getCanvas().getHeight() -(size.getY()+position.getY()),
+                graphicsContext.getCanvas().getHeight() - (size.getY()+position.getY()),
                 size.getX(), size.getY());
     }
 
@@ -100,7 +103,7 @@ public class Camelot extends GameObject implements Gravity{
 
         if(Input.isPressed(KeyCode.X) && timer - throwTime > 0.5) {
             new Journal(position.getX() + size.getX() / 2.,
-                    position.getY() + size.getY(),
+                    position.getY() + size.getY() /2,
                     52, 31, speed,
                     new Point2D(150, 1100).multiply(speedThrowFactor));
 
@@ -108,7 +111,7 @@ public class Camelot extends GameObject implements Gravity{
         }
         if(Input.isPressed(KeyCode.Z) && timer - throwTime > 0.5) {
             new Journal(position.getX() + size.getX() / 2.,
-                    position.getY() + size.getY(),
+                    position.getY() + size.getY() /2,
                     52, 31, speed,
                     new Point2D(900, 900).multiply(speedThrowFactor));
 

@@ -7,35 +7,39 @@ import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
-public class UI extends GameObject{
-    public static double argent = 0;
+public class UI extends GameObject {
+    public static int argent = 0;
 
-    public final Image[] iconeMaison =  {
+    private final String addressStr;
+
+    public final Image[] iconeMaison = {
             new Image(getClass().getResourceAsStream("/assets/icone-maison.png")),
             new Image(getClass().getResourceAsStream("/assets/HouseIcon.png"))
 
     };
 
-    public final Image[] iconeJournal =  {
+    public final Image[] iconeJournal = {
             new Image(getClass().getResourceAsStream("/assets/icone-journal.png")),
             new Image(getClass().getResourceAsStream("/assets/JournalIcon.png"))
     };
 
-    public final Image [] iconeDollar =  {
+    public final Image[] iconeDollar = {
             new Image(getClass().getResourceAsStream("/assets/icone-dollar.png")),
             new Image(getClass().getResourceAsStream("/assets/MoneyIcon.png"))
     };
 
     public UI(double posX, double posY, double width, double height) {
         super(posX, posY, width, height);
+        addressStr = loadAddressString();
     }
 
     @Override
     protected void update() {
     }
+
     @Override
     protected void draw(GraphicsContext graphicsContext, Camera camera) {
-        graphicsContext.setFill(Color.color(0,0,0,0.5));
+        graphicsContext.setFill(Color.color(0, 0, 0, 0.5));
         graphicsContext.fillRect(position.getX(),
                 graphicsContext.getCanvas().getHeight() - position.getY(),
                 size.getX(),
@@ -61,7 +65,7 @@ public class UI extends GameObject{
             graphicsContext.drawImage(iconeDollar[GameObject.imgIndex], separationx, milieuY - 12, 24, 24);
             separationx += 38;
         }
-        graphicsContext.fillText(String.format("%.0f $", argent), separationx, milieuY);
+        graphicsContext.fillText(String.format("%d $", argent), separationx, milieuY);
         separationx += 110;
 
 
@@ -70,6 +74,11 @@ public class UI extends GameObject{
             separationx += 150;
         }
 
+
+        graphicsContext.fillText(addressStr, separationx, milieuY);
+    }
+
+    private String loadAddressString() {
         var maisons = Maison.getListeMaison();
 
         if (maisons != null) {
@@ -82,8 +91,9 @@ public class UI extends GameObject{
                     premiermaison = false;
                 }
             }
-            graphicsContext.fillText(stringBuilder.toString(), separationx, milieuY);
+            return stringBuilder.toString();
         }
 
+        return "";
     }
 }

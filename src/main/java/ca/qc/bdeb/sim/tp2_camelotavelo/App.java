@@ -1,9 +1,11 @@
 package ca.qc.bdeb.sim.tp2_camelotavelo;
 
+import com.sun.tools.javac.Main;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -17,15 +19,19 @@ public class App extends Application {
     public static double WIDTH = 900, HEIGHT = 580;
     private static Stage appStageContext;
     private static final Canvas APP_CANVAS = new Canvas(WIDTH, HEIGHT);
+    private static Color backgroundColor = Color.BLACK;
 
     private static Camera camera;
+
+    public static GameState activeState = GameState.NO_ACTIVE_STATE;
 
 
     @Override
     public void start(Stage stage) throws IOException {
         appStageContext = stage;
+
         initComponents();
-        initGameObjects();
+        //initGameObjects();
         gameLoop();
     }
 
@@ -40,22 +46,16 @@ public class App extends Application {
         appStageContext.show();
 
         //Scene Event Listeners
-        appStageContext.getScene().setOnKeyPressed((k) -> Input.addKey(k.getCode()));
+        appStageContext.getScene().setOnKeyPressed((k) -> {
+            Input.addKey(k.getCode());
+
+            if (k.getCode() == KeyCode.ESCAPE)
+                appStageContext.close();
+        });
+
+
         appStageContext.getScene().setOnKeyReleased((k) -> Input.removeKey(k.getCode()));
     }
-
-    private void initGameObjects(){
-        Wall wall = new Wall(0,0, 192, 96);
-        Random rand = new Random();
-        Maison.genererMaisons(12,HEIGHT,350,rand);
-        Camelot camelot = new Camelot(0, 0, 172, 144);
-        camera = new Camera(camelot);
-        Journal.setMass();
-        Journal.addJournal(12);
-
-        UI ui = new UI(0, HEIGHT, WIDTH, 75);
-        UI.argent=0;
-        }
 
     private void gameLoop(){
         var graphicContext = APP_CANVAS.getGraphicsContext2D();
@@ -65,16 +65,35 @@ public class App extends Application {
 
             @Override
             public void handle(long now) {
-                graphicContext.setFill(Color.BLACK);
-                graphicContext.fillRect(0,0, WIDTH, HEIGHT);
 
-                Time.deltaTime(now);
+                switch (activeState){
+                    case LEVEL_SCREEN -> {
+                        Level.drawLevelScreen(graphicContext);
+                    }
 
-                GameObject.updateAll();
-                GameObject.checkCollision();
-                GameObject.drawAll(graphicContext, camera);
+                    case GAME_SCREEN -> {
 
-                Input.endOfFrame();
+                        graphicContext.setFill(backgroundColor);
+                        graphicContext.fillRect(0,0, WIDTH, HEIGHT);
+
+                        Time.deltaTime(now);
+
+                        GameObject.updateAll();
+                        GameObject.checkCollision();
+                        GameObject.drawAll(graphicContext, camera);
+
+                        Input.endOfFrame();
+                    }
+
+                    case END_SCREEN -> {
+                        Level.drawEndScreen(graphicContext);
+                    }
+
+                    default -> Level.nextLevel();
+                }
+
+
+
             }
         };
         loop.start();
@@ -83,8 +102,11 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
+    public static void setCanvasBackground(Color color){
+        backgroundColor = color;
+    }
 
-    public static void changeScene(Scene gameScene){
-        appStageContext.setScene(gameScene);
+    public static void setCamera(Camera cam){
+        camera = cam;
     }
 }
