@@ -159,7 +159,7 @@ public class Jeu {
         String texte = "Niveau " + niveau;
         gc.fillText(texte, App.WIDTH / 2.0, App.HEIGHT / 2.0);
     }
-
+    //Affichage de l'écran de fin
     private void drawEcranFin(GraphicsContext gc) {
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, App.WIDTH, App.HEIGHT);
@@ -175,7 +175,16 @@ public class Jeu {
         gc.fillText(String.format("Argent total : %.0f $", UI.argent),
                 App.WIDTH / 2.0, App.HEIGHT / 2.0 + 20);
     }
-
+    /**
+     * Gestion des touches globales du jeu :
+     * - D : debug hitbox
+     * - Q : +10 journaux
+     * - P : changer skin du Camelot
+     * - K : vider l’inventaire
+     * - F : afficher/masquer le champ électrique
+     * - I : test particules
+     * - L : passer au niveau suivant
+     */
     private void handleInputs(){
         if (Input.isPressed(KeyCode.D) && !Input.wasPressed(KeyCode.D)){
             GameObject.switchDebugState();
@@ -206,7 +215,7 @@ public class Jeu {
          return;
         }
     }
-
+    // regarde si les journaux sont détruits pour mettre fin à la partie
     public void checkGameOver(){
         if (Journal.getJournalCount() < 1 && Journal.getJournauxActif() == 0) {
             etat = EtatJeu.FINI;
