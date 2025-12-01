@@ -1,17 +1,18 @@
 package ca.qc.bdeb.sim.tp2_camelotavelo;
 
-import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 public class BoiteAuxLettres extends GameObject implements Collidable, Debuggable{
-    private static final double largeur = 81;
-    private static final double hauteur = 76;
+    //Attributs
+    public static final double LARGEUR = 81;
+    public static final double HAUTEUR = 76;
     private final boolean abonnee;
     private boolean touchee;
     private Boolean livraisonBonne;
 
+    // Image BoiteAuxLettres
     private final Image [][] SPRITES = {
             {
                     new Image(getClass().getResourceAsStream("/assets/boite-aux-lettres.png")),
@@ -20,17 +21,29 @@ public class BoiteAuxLettres extends GameObject implements Collidable, Debuggabl
             {
     }};
 
+    /**
+     * Constructeur.
+     * @param posX position horizontale
+     * @param posY position verticale
+     * @param abonnee indique si la maison est abonnée au journal
+     */
     public BoiteAuxLettres(double posX, double posY, boolean abonnee) {
-      super(posX,posY,largeur,hauteur);
+      super(posX,posY, LARGEUR, HAUTEUR);
         this.abonnee = abonnee;
         this.touchee = false;
         this.livraisonBonne = null;
     }
 
+    /**
+     * Gestion d'une collision avec un autre GameObject.
+     * Seuls les journaux déclenchent une action.
+     */
     @Override
     public void isColliding(GameObject other) {
+        // Pas de journal, on ignore
         if (!(other instanceof Journal)) return;
-        if (touchee) return;
+        // déjà touchêe une fois, on ignore
+        if (touchee) return; // marquer toucher
         touchee = true;
         if (abonnee) {
             livraisonBonne = true;
@@ -43,21 +56,23 @@ public class BoiteAuxLettres extends GameObject implements Collidable, Debuggabl
     public boolean estAbonnee() {
         return abonnee;
     }
-
     public boolean estTouchee() {
         return touchee;
     }
-
     public Boolean livraisonBonne() {
         return livraisonBonne;
     }
-
 
     @Override
     protected void update() {
 
     }
 
+    /**
+     * Dessine la boîte aux lettres selon son état
+     * (normal, verte ou rouge).
+     *
+     */
     public void draw(GraphicsContext gc, Camera camera) {
         Image imageFenetre = SPRITES[0][0];
 
@@ -80,6 +95,9 @@ public class BoiteAuxLettres extends GameObject implements Collidable, Debuggabl
         );
     }
 
+    /**
+     * Dessine la hitbox en mode debug.
+     */
     @Override
     public void drawDebugState(GraphicsContext gc, Camera camera) {
         gc.setStroke(Color.YELLOW);

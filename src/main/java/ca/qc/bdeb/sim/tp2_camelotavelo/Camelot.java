@@ -7,6 +7,10 @@ import javafx.scene.input.KeyCode;
 
 public class Camelot extends GameObject implements Gravity{
 
+    /*Les images du Camelot, avec des version
+    * la première est la version noramle
+    * la deuxième est la version pixels dissiner par VINCENT :)
+    */
     private final Image[][] SPRITES = {
             {
                     new Image(getClass().getResourceAsStream("/assets/camelot1.png")),
@@ -40,12 +44,22 @@ public class Camelot extends GameObject implements Gravity{
     private Point2D acceleration;
     private float speedThrowFactor = 1;
 
+    /**
+     * Constructeur de Camelot.
+     * @param posX position horizontale initiale
+     * @param posY position verticale initiale
+     * @param width largeur du sprite
+     * @param height hauteur du sprite
+     */
     public Camelot(double posX, double posY, double width, double height) {
         super(posX, posY, width, height);
         speed = new Point2D(400,0);
         acceleration = new Point2D(0,0);
     }
 
+    /**
+     * Met à jour la position, la physique et l’animation de Camelot.
+     */
     @Override
     protected void update() {
         timer += Time.deltaTimeSec;
@@ -56,7 +70,9 @@ public class Camelot extends GameObject implements Gravity{
 
         handleInput();
     }
-
+    /**
+     * Dessine Camelot avec le bon sprite selon l’animation.
+     */
     @Override
     protected void draw(GraphicsContext graphicsContext, Camera camera) {
         graphicsContext.drawImage(
@@ -66,6 +82,9 @@ public class Camelot extends GameObject implements Gravity{
                 size.getX(), size.getY());
     }
 
+    /**
+     * Applique la gravité tant que Camelot n’est pas au sol.
+     */
     @Override
     public void applyGravity() {
         if (!isGrounded){
@@ -79,29 +98,29 @@ public class Camelot extends GameObject implements Gravity{
             speed = new Point2D(speed.getX(), 0);
         }
     }
-
-    public Point2D getPosition() {
-        return position;
-    }
-
+    /**
+     * Lit les touches pressées et applique les actions
+     */
     private void handleInput(){
+        //desacceleration
         if(Input.isPressed(KeyCode.RIGHT)) {
             acceleration = new Point2D(300, acceleration.getY());
         }else if (speed.getX() > 400)
             acceleration = new Point2D(-300, acceleration.getY());
-
+        //acceleration augmente
         if(Input.isPressed(KeyCode.LEFT)) {
             acceleration = new Point2D(-300, acceleration.getY());
         }else if (speed.getX() < 400)
             acceleration = new Point2D(+300, acceleration.getY());
-
+        //saute
         if(isGrounded && ((Input.isPressed(KeyCode.SPACE) || (Input.isPressed(KeyCode.UP))))) {
             isGrounded = false;
             speed = speed.add(0, 500);
         }
 
         speedThrowFactor = Input.isPressed(KeyCode.SHIFT)? 1.5f : 1.f;
-
+        // Lancer les journaux
+        //vers le haut
         if(Input.isPressed(KeyCode.X) && timer - throwTime > 0.5) {
             new Journal(position.getX() + size.getX() / 2.,
                     position.getY() + size.getY(),
@@ -110,6 +129,7 @@ public class Camelot extends GameObject implements Gravity{
 
             throwTime = timer;
         }
+        // à la longeur
         if(Input.isPressed(KeyCode.Z) && timer - throwTime > 0.5) {
             new Journal(position.getX() + size.getX() / 2.,
                     position.getY() + size.getY(),
