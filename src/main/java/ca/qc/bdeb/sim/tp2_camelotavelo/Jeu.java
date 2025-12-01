@@ -7,7 +7,13 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+/**
+ * Classe principale qui gère la logique du jeu :
+ * - États (chargement, jeu, fin)
+ * - Niveaux
+ * - Réinitialisation et transition entre niveaux
+ * - Gestion des entrées clavier
+ */
 public class Jeu {
 
     private enum EtatJeu {
@@ -15,7 +21,7 @@ public class Jeu {
         EN_COURS,     // on joue
         FINI          // écran de fin
     }
-
+    //Attributs
     private EtatJeu etat = EtatJeu.CHARGEMENT;
     private double tempsEtat = 0;
 
@@ -28,10 +34,12 @@ public class Jeu {
     private Camera camera;
     private List<Maison> maisons = new ArrayList<>();
 
+    // Constructeur : démarre une nouvelle partie
     public Jeu() {
         nouvellePartie();
     }
 
+    //Remet la partie à zéro et retourne au niveau 1
     private void nouvellePartie() {
         niveau = 1;
         UI.argent = 0;
@@ -41,7 +49,7 @@ public class Jeu {
 
         initialiserNiveau();       // prépare le niveau 1 (mais on voit juste l’écran de chargement au début)
     }
-
+    //Initialise un nouveau niveau
     private void initialiserNiveau() {
         // On efface tous les GameObject du niveau précédent
         GameObject.clearAll();
@@ -82,7 +90,10 @@ public class Jeu {
             ParticuleChargee.clearAll();
         }
     }
-
+    /**
+     * Mise à jour principale du jeu (met à jour les états)
+     * @param dt temps écoulé en secondes
+     */
     public void update(double dt) {
         tempsEtat += dt;
         switch (etat) {
@@ -102,7 +113,7 @@ public class Jeu {
             }
         }
     }
-
+    //Mise à jour quand le jeu est en cours
     private void updateEnCours() {
         handleInputs();
         GameObject.updateAll();
@@ -119,7 +130,7 @@ public class Jeu {
         // Fin de partie  (plus de journaux en inventaire ET plus aucun journal à l'écran)
         checkGameOver();
     }
-
+    //ffichage du contenu selon l'état du jeu
     public void draw(GraphicsContext gc) {
         switch (etat) {
             case CHARGEMENT -> drawEcranChargement(gc);
@@ -129,13 +140,13 @@ public class Jeu {
     }
 
 
-
+    //Affichage du niveau
     private void drawJeu(GraphicsContext gc) {
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, App.WIDTH, App.HEIGHT);
         GameObject.drawAll(gc, camera);
     }
-
+    //Affichage de l'écran "Niveau X"
     private void drawEcranChargement(GraphicsContext gc) {
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, App.WIDTH, App.HEIGHT);
