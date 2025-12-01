@@ -212,7 +212,6 @@ public class Jeu {
          etat = EtatJeu.CHARGEMENT;
          tempsEtat = 0;
          initialiserNiveau();
-         return;
         }
     }
     // regarde si les journaux sont détruits pour mettre fin à la partie

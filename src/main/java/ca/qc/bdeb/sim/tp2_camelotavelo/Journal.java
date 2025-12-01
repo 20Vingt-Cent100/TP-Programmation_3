@@ -21,7 +21,7 @@ public class Journal extends GameObject implements Gravity, Collidable, Debuggab
 
     private static int journauxActif;
 
-    private Image sprite = new Image(getClass().getResourceAsStream("/assets/journal.png"));
+    private final Image sprite = new Image(getClass().getResourceAsStream("/assets/journal.png"));
 
     private Point2D acceleration;
     private Point2D speed;
